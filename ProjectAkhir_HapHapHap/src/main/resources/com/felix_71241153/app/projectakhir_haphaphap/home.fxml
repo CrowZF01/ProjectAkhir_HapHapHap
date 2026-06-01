@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.homeController">
+    <children>
+        <VBox prefWidth="220.0" style="-fx-background-color: #FFFFFF;" HBox.hgrow="NEVER">
+            <padding>
+                <Insets bottom="30.0" left="25.0" right="25.0" top="30.0" />
+            </padding>
+            <children>
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #A65021;" text="HapHapHap" />
+
+                <VBox spacing="20.0" style="-fx-margin-top: 40px;">
+                    <VBox.margin>
+                        <Insets top="40.0" />
+                    </VBox.margin>
+                    <children>
+                        <Label onMouseClicked="#kategoriSemua" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555; -fx-font-weight: bold;" text="🍴  Semua Resep" />
+                        <Label onMouseClicked="#kategoriMakanan" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="🥞  Makanan" />
+                        <Label onMouseClicked="#kategoriDessert" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="🍦  Dessert" />
+                        <Label onMouseClicked="#kategoriMinuman" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="☕  Minuman" />
+
+                        <Region prefHeight="15.0" />
+                        <Label fx:id="menuFavorit" onMouseClicked="#pindahFavorit" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="♡  Favorit" />
+                        <Label fx:id="menuMyRecipes" onMouseClicked="#pindahMyRecipes" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="📖  My Recipes" />
+                        <Label fx:id="menuModerasi" onMouseClicked="#pindahModerasi" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="🔑  Moderasi Resep" />
+                    </children>
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS" />
+
+                <VBox spacing="15.0">
+                    <children>
+                        <Button fx:id="btnAddRecipe" maxWidth="Infinity" onAction="#handleAddRecipe" style="-fx-background-color: #A65021; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10; -fx-cursor: hand;" text="+ Add Recipe" />
+                        <Button onAction="#handleLogout" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-cursor: hand;" text="🚪 Logout" />
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+
+        <StackPane fx:id="contentArea" style="-fx-background-color: #F5F5F5;" HBox.hgrow="ALWAYS" />
+    </children>
+</HBox>
