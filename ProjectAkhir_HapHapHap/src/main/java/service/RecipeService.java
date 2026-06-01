@@ -70,6 +70,7 @@ public class RecipeService {
 
         int waktu = 0;
         int porsi = 0;
+
         try {
             waktu = waktuStr == null || waktuStr.isEmpty() ? 0 : Integer.parseInt(waktuStr);
             porsi = porsiStr == null || porsiStr.isEmpty() ? 0 : Integer.parseInt(porsiStr);

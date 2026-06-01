@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox style="-fx-background-color: #F5F5F5;" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.favoritController">
+    <padding>
+        <Insets bottom="40.0" left="50.0" right="50.0" top="50.0" />
+    </padding>
+    <children>
+        <HBox alignment="CENTER_LEFT" spacing="20.0">
+            <children>
+                <VBox HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="Favorit Saya" />
+                        <Label style="-fx-font-size: 14px; -fx-text-fill: #666666;" text="Koleksi resep makanan pilihan Anda.">
+                            <VBox.margin><Insets top="5.0" /></VBox.margin>
+                        </Label>
+                    </children>
+                </VBox>
+                <Button fx:id="btnEksporSemua" onAction="#handleEksporSemua" style="-fx-background-color: #2E7D32; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10 15; -fx-cursor: hand;" text="📥 Ekspor Semua Favorit" />
+            </children>
+            <VBox.margin>
+                <Insets bottom="30.0" />
+            </VBox.margin>
+        </HBox>
+
+        <ScrollPane fitToWidth="true" style="-fx-background: #F5F5F5; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+            <content>
+                <VBox fx:id="favoritContainer" spacing="20.0" style="-fx-padding: 5;" />
+            </content>
+        </ScrollPane>
+    </children>
+</VBox>
