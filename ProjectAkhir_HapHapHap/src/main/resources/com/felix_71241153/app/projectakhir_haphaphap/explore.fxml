@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.exploreController">
+    <children>
+        <VBox style="-fx-background-color: #F5F5F5;" HBox.hgrow="ALWAYS">
+            <padding>
+                <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
+            </padding>
+            <children>
+                <HBox alignment="CENTER_LEFT" style="-fx-background-color: #EBEBEB; -fx-background-radius: 8; -fx-padding: 0 5;">
+                    <children>
+                        <Button onAction="#handleCariResep" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-font-size: 14px;" text="🔍" textFill="#888888" />
+                        <TextField fx:id="searchField" onAction="#handleCariResep" promptText="Search recipes..." style="-fx-background-color: transparent; -fx-border-width: 0; -fx-padding: 12; -fx-font-size: 13px;" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+
+                <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Temukan Resep">
+                    <VBox.margin>
+                        <Insets bottom="20.0" top="30.0" />
+                    </VBox.margin>
+                </Label>
+
+                <ScrollPane fitToWidth="true" style="-fx-background: #F5F5F5; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                    <content>
+                        <FlowPane fx:id="resepContainer" hgap="20.0" style="-fx-padding: 5;" vgap="20.0" />
+                    </content>
+                </ScrollPane>
+            </children>
+        </VBox>
+
+        <VBox prefWidth="260.0" style="-fx-background-color: #FFFFFF;" HBox.hgrow="NEVER">
+            <padding>
+                <Insets bottom="30.0" left="25.0" right="25.0" top="30.0" />
+            </padding>
+            <children>
+                <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Filter Dapur" />
+
+                <VBox spacing="10.0">
+                    <VBox.margin>
+                        <Insets top="30.0" />
+                    </VBox.margin>
+                    <children>
+                        <Label style="-fx-font-size: 11px;" text="Include Ingredients" textFill="#888888" />
+                        <HBox alignment="CENTER" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-padding: 0 10;">
+                            <children>
+                                <TextField fx:id="inputBahanField" onAction="#handleTambahBahan" promptText="e.g. Nasi, Ayam" style="-fx-background-color: transparent; -fx-border-width: 0; -fx-font-size: 12px; -fx-padding: 10 5;" HBox.hgrow="ALWAYS" />
+                                <Button onAction="#handleTambahBahan" style="-fx-background-color: transparent; -fx-text-fill: #A65021; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;" text="⊕" />
+                            </children>
+                        </HBox>
+                        <FlowPane fx:id="tagContainer" hgap="8.0" vgap="8.0">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                        </FlowPane>
+                    </children>
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS" />
+                <Button maxWidth="Infinity" onAction="#handleTerapkanFilter" style="-fx-background-color: #A65021; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10; -fx-cursor: hand;" text="Terapkan Filter" />
+            </children>
+        </VBox>
+    </children>
+</HBox>

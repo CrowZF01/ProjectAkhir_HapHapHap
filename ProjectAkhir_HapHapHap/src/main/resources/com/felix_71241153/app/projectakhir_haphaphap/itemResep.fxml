@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="cardUtama" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, #d0d0d0, 10, 0, 0, 5);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.itemResepController">
+    <children>
+        <StackPane prefHeight="150.0" style="-fx-background-color: #E0E0E0; -fx-background-radius: 10 10 0 0;">
+            <children>
+                <ImageView fx:id="fotoResep" fitHeight="150.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="false" />
+
+                <Label fx:id="ikonHati" text="♡" StackPane.alignment="TOP_RIGHT">
+                    <StackPane.margin>
+                        <Insets right="10.0" top="10.0" />
+                    </StackPane.margin>
+                </Label>
+            </children>
+        </StackPane>
+        <VBox spacing="8.0">
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </padding>
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <children>
+                        <Label fx:id="judulLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Nama Resep" wrapText="true" HBox.hgrow="ALWAYS" />
+                        <Label fx:id="kategoriLabel" style="-fx-background-color: #FBE2D1; -fx-text-fill: #A65021; -fx-font-size: 9px; -fx-font-weight: bold; -fx-padding: 3 6; -fx-background-radius: 4;" text="KATEGORI" />
+                    </children>
+                </HBox>
+                <Label fx:id="bahanLabel" style="-fx-font-size: 11px; -fx-line-spacing: 2px;" text="Daftar bahan-bahan..." textFill="#777777" wrapText="true" />
+                <HBox alignment="CENTER_LEFT" spacing="15.0">
+                    <children>
+                        <Label fx:id="waktuLabel" style="-fx-font-size: 11px;" text="⏱ 0m" textFill="#888888" />
+                        <Label fx:id="porsiLabel" style="-fx-font-size: 11px;" text="🍽 0 Porsi" textFill="#888888" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnEditAdmin" onAction="#handleEditAdmin" style="-fx-background-color: #FBE2D1; -fx-text-fill: #A65021; -fx-font-weight: bold; -fx-padding: 3 8; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-size: 10px;" text="Edit" />
+                        <Button fx:id="btnHapusAdmin" onAction="#handleHapusAdmin" style="-fx-background-color: #FADBD8; -fx-text-fill: #C0392B; -fx-font-weight: bold; -fx-padding: 3 8; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-size: 10px;" text="🗑" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="5.0" />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</VBox>
