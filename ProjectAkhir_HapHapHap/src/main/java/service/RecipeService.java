@@ -128,4 +128,93 @@ public class RecipeService {
             throw new RuntimeException("Gagal menyimpan resep ke database. Silakan coba lagi.");
         }
     }
+
+
+    public List<Resep> getPendingResep() {
+        return resepDao.getPendingResep();
+    }
+
+    public boolean updateResepStatus(int idResep, String status) {
+        return resepDao.updateResepStatus(idResep, status);
+    }
+
+    public void perbaruiResep(int idResep, String judul, String kategori, int tingkatKepedasan,
+                              String waktuStr, String porsiStr, List<String> listBahan,
+                              List<String> listLangkah, File fotoTerpilih) {
+
+        if (judul == null || judul.trim().isEmpty()) {
+            throw new IllegalArgumentException("Judul resep tidak boleh kosong!");
+        }
+        if (kategori == null) {
+            throw new IllegalArgumentException("Silakan pilih kategori resep!");
+        }
+
+        int waktu = 0;
+        int porsi = 0;
+        try {
+            waktu = waktuStr == null || waktuStr.isEmpty() ? 0 : Integer.parseInt(waktuStr);
+            porsi = porsiStr == null || porsiStr.isEmpty() ? 0 : Integer.parseInt(porsiStr);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Estimasi Waktu dan Porsi harus berupa angka bulat!");
+        }
+
+        if (listBahan == null || listBahan.isEmpty()) {
+            throw new IllegalArgumentException("Minimal harus ada 1 bahan yang diisi!");
+        }
+
+        int idKategori = 2; // Default Makanan
+        if ("Dessert".equals(kategori)) {
+            idKategori = 4;
+        } else if ("Minuman".equals(kategori)) {
+            idKategori = 5;
+        }
+
+        StringBuilder langkahGabungan = new StringBuilder();
+        int step = 1;
+        for (String langkah : listLangkah) {
+            if (langkah != null && !langkah.trim().isEmpty()) {
+                langkahGabungan.append(step).append(". ").append(langkah.trim()).append("\n\n");
+                step++;
+            }
+        }
+
+        String namaFileFoto = null;
+        if (fotoTerpilih != null) {
+            try {
+                namaFileFoto = System.currentTimeMillis() + "_" + fotoTerpilih.getName().replaceAll("\\s+", "_");
+
+                File folderImages = new File("src/main/resources/images/");
+                if (!folderImages.exists()) {
+                    folderImages.mkdirs();
+                }
+
+                File tujuan = new File(folderImages, namaFileFoto);
+                java.nio.file.Files.copy(fotoTerpilih.toPath(), tujuan.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException("Terjadi kesalahan saat mengunggah foto: " + e.getMessage());
+            }
+        }
+
+        boolean sukses = resepDao.editResepLengkap(idResep, idKategori, judul, tingkatKepedasan,
+                waktu, porsi, langkahGabungan.toString(),
+                listBahan, namaFileFoto);
+        if (!sukses) {
+            throw new RuntimeException("Gagal mengupdate resep di database. Silakan coba lagi.");
+        }
+    }
+
+    public boolean cekFavorit(int idUser, int idResep) {
+        return resepDao.cekFavorit(idUser, idResep);
+    }
+
+    public void toggleFavorit(int idUser, int idResep, boolean isFavoritNow) {
+        if (isFavoritNow) {
+            resepDao.hapusFavorit(idUser, idResep);
+        } else {
+            resepDao.tambahKeFavorit(idUser, idResep);
+        }
+    }
+
+    
 }
