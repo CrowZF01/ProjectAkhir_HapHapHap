@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.registerController">
+    <children>
+
+        <VBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox maxWidth="380.0" spacing="25.0" style="-fx-background-color: #FFFFFF; -fx-padding: 40; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 15, 0, 0, 5);">
+                    <children>
+                        <VBox spacing="8.0">
+                            <children>
+                                <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #222222; -fx-line-spacing: -5px;" text="Selamat Datang&#10;Di Haphaphap" wrapText="true" />
+                                <Label style="-fx-font-size: 12px; -fx-text-fill: #777777;" text="Silakan mendaftarkan akun Anda untuk melanjutkan." wrapText="true" />
+                            </children>
+                        </VBox>
+                        <Label style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #444444;" text="Konfirmasi Kata Sandi" />
+
+                        <VBox spacing="15.0">
+                            <children>
+                                <VBox spacing="6.0">
+                                    <children>
+                                        <Label style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #444444;" text="Username" />
+                                        <TextField fx:id="usernameField" promptText="Masukkan username Anda" style="-fx-background-color: #F0F0F0; -fx-background-radius: 6; -fx-padding: 10 12; -fx-prompt-text-fill: #AAAAAA; -fx-font-size: 13px; -fx-border-width: 0;" />
+                                    </children>
+                                </VBox>
+                                <VBox spacing="6.0">
+                                    <children>
+                                        <Label style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #444444;" text="Kata Sandi" />
+                                        <PasswordField fx:id="passwordField" promptText="Masukkan kata sandi Anda" style="-fx-background-color: #F0F0F0; -fx-background-radius: 6; -fx-padding: 10 12; -fx-prompt-text-fill: #AAAAAA; -fx-font-size: 13px; -fx-border-width: 0;" />
+                                    </children>
+                                </VBox>
+                                <VBox spacing="6.0">
+                                    <children>
+                                        <PasswordField fx:id="confirmPasswordField" promptText="Masukkan ulang kata sandi Anda" style="-fx-background-color: #F0F0F0; -fx-background-radius: 6; -fx-padding: 10 12; -fx-prompt-text-fill: #AAAAAA; -fx-font-size: 13px; -fx-border-width: 0;" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </VBox>
+                        <VBox spacing="10.0">
+                            <children>
+                                <Label fx:id="statusLabel" alignment="CENTER" maxWidth="Infinity" style="-fx-font-size: 13px; -fx-font-weight: bold;" text="" />
+                                <Button maxWidth="Infinity" onAction="#handleDaftar" style="-fx-background-color: #A0522D; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10; -fx-cursor: hand; -fx-font-size: 13px;" text="Daftar" />
+                                <Button maxWidth="Infinity" onAction="#handleKembali" onMouseClicked="#handleKembali" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 10; -fx-cursor: hand; -fx-font-size: 13px;" text="Kembali" />
+                            </children>
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                        </VBox>
+
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
