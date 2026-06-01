@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox style="-fx-background-color: #F5F5F5;" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.myRecipesController">
+    <padding>
+        <Insets bottom="40.0" left="50.0" right="50.0" top="50.0" />
+    </padding>
+    <children>
+
+        <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="Resep Saya" />
+        <Label style="-fx-font-size: 14px; -fx-text-fill: #666666;" text="Koleksi resep makanan buatan Anda.">
+            <VBox.margin><Insets bottom="30.0" top="5.0" /></VBox.margin>
+        </Label>
+
+        <ScrollPane fitToWidth="true" style="-fx-background: #F5F5F5; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+            <content>
+                <VBox fx:id="myRecipesContainer" spacing="20.0" style="-fx-padding: 5;">
+                </VBox>
+            </content>
+        </ScrollPane>
+
+    </children>
+</VBox>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<ScrollPane fitToWidth="true" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: white; -fx-background: white; -fx-border-color: transparent;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.addResepController">
+    <content>
+        <VBox spacing="30.0" style="-fx-background-color: white;">
+            <padding>
+                <Insets bottom="50.0" left="60.0" right="60.0" top="30.0" />
+            </padding>
+            <children>
+
+                <HBox alignment="CENTER_LEFT" spacing="15.0">
+                    <children>
+                        <Label onMouseClicked="#handleKembali" style="-fx-cursor: hand; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #555555;" text="←" />
+                        <Label fx:id="titleLabel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #222222;" text="Racik Resep Baru" />
+                    </children>
+                </HBox>
+
+                <HBox spacing="50.0">
+                    <children>
+                        <VBox spacing="35.0" HBox.hgrow="ALWAYS">
+                            <children>
+
+                                <VBox spacing="20.0">
+                                    <children>
+                                        <VBox spacing="8.0">
+                                            <children>
+                                                <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #555555;" text="Nama Resep" />
+                                                <TextField fx:id="inputJudul" promptText="Contoh: Rendang Sapi Padang Asli" style="-fx-background-color: #F5F5F5; -fx-padding: 12 15; -fx-background-radius: 6; -fx-border-width: 0; -fx-font-size: 13px;" />
+                                            </children>
+                                        </VBox>
+
+                                        <HBox spacing="30.0">
+                                            <children>
+                                                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #555555;" text="Kategori" />
+                                                        <ComboBox fx:id="comboKategori" maxWidth="Infinity" promptText="Pilih Kategori" style="-fx-background-color: #F5F5F5; -fx-padding: 6 10; -fx-background-radius: 6;" />
+                                                    </children>
+                                                </VBox>
+
+                                                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                                    <children>
+                                                        <Label style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #555555;" text="Tingkat Kepedasan" />
+                                                        <FlowPane hgap="10.0" vgap="10.0">
+                                                            <children>
+                                                                <Button fx:id="btnLv0" onAction="#setPedas0" style="-fx-background-color: #FBE2D1; -fx-background-radius: 20; -fx-text-fill: #A65021; -fx-font-weight: bold; -fx-padding: 6 15; -fx-cursor: hand;" text="Tidak Pedas" />
+                                                                <Button fx:id="btnLv1" onAction="#setPedas1" style="-fx-background-color: #F5F5F5; -fx-background-radius: 20; -fx-text-fill: #555555; -fx-padding: 6 15; -fx-cursor: hand;" text="Sedikit Pedas" />
+                                                                <Button fx:id="btnLv2" onAction="#setPedas2" style="-fx-background-color: #F5F5F5; -fx-background-radius: 20; -fx-text-fill: #555555; -fx-padding: 6 15; -fx-cursor: hand;" text="Pedas" />
+                                                                <Button fx:id="btnLv3" onAction="#setPedas3" style="-fx-background-color: #F5F5F5; -fx-background-radius: 20; -fx-text-fill: #555555; -fx-padding: 6 15; -fx-cursor: hand;" text="Sangat Pedas" />
+                                                            </children>
+                                                        </FlowPane>
+                                                    </children>
+                                                </VBox>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="15.0">
+                                    <children>
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Bahan-bahan" />
+                                        <VBox fx:id="bahanContainer" spacing="10.0" />
+                                        <Label onMouseClicked="#tambahBarisBahan" style="-fx-text-fill: #A65021; -fx-font-weight: bold; -fx-cursor: hand; -fx-font-size: 13px;" text="+ Tambah Bahan" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="15.0">
+                                    <children>
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333333;" text="Langkah Memasak" />
+                                        <VBox fx:id="langkahContainer" spacing="15.0" />
+                                        <Label onMouseClicked="#tambahBarisLangkah" style="-fx-text-fill: #A65021; -fx-font-weight: bold; -fx-cursor: hand; -fx-font-size: 13px;" text="+ Tambah Langkah" />
+                                    </children>
+                                </VBox>
+
+                            </children>
+                        </VBox>
+
+                        <VBox prefWidth="320.0" spacing="25.0">
+                            <children>
+                                <VBox spacing="15.0" style="-fx-background-color: #F08A24; -fx-background-radius: 10; -fx-padding: 25;">
+                                    <children>
+                                        <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #663300;" text="Info Penyajian" />
+                                        <VBox spacing="6.0">
+                                            <children>
+                                                <Label style="-fx-font-size: 12px; -fx-text-fill: #884400; -fx-font-weight: bold;" text="Estimasi Waktu" />
+                                                <HBox alignment="CENTER_LEFT" style="-fx-background-color: rgba(255,255,255,0.25); -fx-background-radius: 6; -fx-padding: 0 15;">
+                                                    <children>
+                                                        <TextField fx:id="inputWaktu" alignment="CENTER_RIGHT" promptText="45" style="-fx-background-color: transparent; -fx-text-fill: #331100; -fx-font-weight: bold; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                                                        <Label style="-fx-text-fill: #663300; -fx-font-weight: bold;" text="Menit" />
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+                                        <VBox spacing="6.0">
+                                            <children>
+                                                <Label style="-fx-font-size: 12px; -fx-text-fill: #884400; -fx-font-weight: bold;" text="Porsi Sajian" />
+                                                <HBox alignment="CENTER_LEFT" style="-fx-background-color: rgba(255,255,255,0.25); -fx-background-radius: 6; -fx-padding: 0 15;">
+                                                    <children>
+                                                        <TextField fx:id="inputPorsi" alignment="CENTER_RIGHT" promptText="4" style="-fx-background-color: transparent; -fx-text-fill: #331100; -fx-font-weight: bold; -fx-font-size: 14px;" HBox.hgrow="ALWAYS" />
+                                                        <Label style="-fx-text-fill: #663300; -fx-font-weight: bold;" text="Orang" />
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </VBox>
+
+                                <StackPane onMouseClicked="#handleUploadFoto" prefHeight="220.0" style="-fx-background-color: #F8F8F8; -fx-background-radius: 10; -fx-border-color: #DDDDDD; -fx-border-style: dashed; -fx-border-width: 2; -fx-border-radius: 10; -fx-cursor: hand;">
+                                    <children>
+                                        <ImageView fx:id="previewFoto" fitHeight="210.0" fitWidth="310.0" preserveRatio="false" style="-fx-background-radius: 10;" />
+
+                                        <VBox fx:id="placeholderFoto" alignment="CENTER" spacing="10.0" mouseTransparent="true">
+                                            <children>
+                                                <Label style="-fx-font-size: 36px; -fx-text-fill: #BBBBBB;" text="🖼" />
+                                                <Label style="-fx-text-fill: #777777; -fx-font-weight: bold;" text="Pilih Foto Hidangan" />
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </StackPane>
+
+                                <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                                    <VBox.margin><Insets top="10.0" /></VBox.margin>
+                                    <children>
+                                        <Button onAction="#handleKembali" style="-fx-background-color: transparent; -fx-text-fill: #A65021; -fx-font-weight: bold; -fx-cursor: hand; -fx-font-size: 14px;" text="Batal" />
+                                        <Button fx:id="btnSimpan" onAction="#handleSimpan" style="-fx-background-color: #A65021; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 12 25; -fx-cursor: hand; -fx-font-size: 14px;" text="Simpan Resep" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </content>
+</ScrollPane>
