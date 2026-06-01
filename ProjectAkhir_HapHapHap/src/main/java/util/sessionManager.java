@@ -1,5 +1,4 @@
 package util;
-
 import model.User;
 
 public class sessionManager {
