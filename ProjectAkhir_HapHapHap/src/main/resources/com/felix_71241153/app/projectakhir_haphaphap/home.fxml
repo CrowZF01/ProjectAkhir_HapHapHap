@@ -18,10 +18,10 @@
                         <Insets top="40.0" />
                     </VBox.margin>
                     <children>
-                        <Label onMouseClicked="#kategoriSemua" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555; -fx-font-weight: bold;" text="🍴  Semua Resep" />
-                        <Label onMouseClicked="#kategoriMakanan" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="🥞  Makanan" />
-                        <Label onMouseClicked="#kategoriDessert" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="🍦  Dessert" />
-                        <Label onMouseClicked="#kategoriMinuman" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="☕  Minuman" />
+                        <Label fx:id="menuSemua" onMouseClicked="#kategoriSemua" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555; -fx-font-weight: bold;" text="🍴  Semua Resep" />
+                        <Label fx:id="menuMakanan" onMouseClicked="#kategoriMakanan" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="🥞  Makanan" />
+                        <Label fx:id="menuDessert" onMouseClicked="#kategoriDessert" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="🍦  Dessert" />
+                        <Label fx:id="menuMinuman" onMouseClicked="#kategoriMinuman" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="☕  Minuman" />
 
                         <Region prefHeight="15.0" />
                         <Label fx:id="menuFavorit" onMouseClicked="#pindahFavorit" style="-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;" text="♡  Favorit" />

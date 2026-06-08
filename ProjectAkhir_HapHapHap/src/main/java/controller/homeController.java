@@ -24,6 +24,10 @@ public class homeController {
     private myRecipesController myRecipesCtrl;
     
     @FXML private StackPane contentArea;
+    @FXML private Label menuSemua;
+    @FXML private Label menuMakanan;
+    @FXML private Label menuDessert;
+    @FXML private Label menuMinuman;
     @FXML private Label menuFavorit;
     @FXML private Label menuMyRecipes;
     @FXML private Label menuModerasi;
@@ -67,20 +71,46 @@ public class homeController {
         }
 
         bukaExplore("Semua");
+        setAktif(menuSemua);
+    }
+
+    private void setAktif(Label activeLabel) {
+        Label[] menus = {menuSemua, menuMakanan, menuDessert, menuMinuman, menuFavorit, menuMyRecipes, menuModerasi};
+        for (Label menu : menus) {
+            if (menu != null) {
+                if (menu == activeLabel) {
+                    menu.setStyle("-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555; -fx-font-weight: bold;");
+                } else {
+                    menu.setStyle("-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;");
+                }
+            }
+        }
     }
 
     // ====== FUNGSI SIDEBAR NAVIGASI ======
     @FXML
-    public void kategoriSemua() { bukaExplore("Semua"); }
+    public void kategoriSemua() {
+        bukaExplore("Semua");
+        setAktif(menuSemua);
+    }
 
     @FXML
-    public void kategoriMakanan() { bukaExplore("Makanan"); }
+    public void kategoriMakanan() {
+        bukaExplore("Makanan");
+        setAktif(menuMakanan);
+    }
 
     @FXML
-    public void kategoriDessert() { bukaExplore("Dessert"); }
+    public void kategoriDessert() {
+        bukaExplore("Dessert");
+        setAktif(menuDessert);
+    }
 
     @FXML
-    public void kategoriMinuman() { bukaExplore("Minuman"); }
+    public void kategoriMinuman() {
+        bukaExplore("Minuman");
+        setAktif(menuMinuman);
+    }
 
     // Fungsi canggih untuk menyuntikkan (inject) halaman tanpa reload frame
     private void bukaExplore(String kategori) {
@@ -115,6 +145,7 @@ public class homeController {
 
             // Tampilkan view yang sudah di-cache tanpa me-load ulang data dari nol
             contentArea.getChildren().setAll(favoritView);
+            setAktif(menuFavorit);
 
         } catch (Exception e) {
             System.out.println("Gagal memuat halaman Favorit");
@@ -166,6 +197,7 @@ public class homeController {
 
             // Tampilkan view yang sudah di-cache secara instan
             contentArea.getChildren().setAll(myRecipesView);
+            setAktif(menuMyRecipes);
 
         } catch (Exception e) {
             System.out.println("Gagal memuat halaman My Recipes");
@@ -179,6 +211,7 @@ public class homeController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/moderasiAdmin.fxml"));
             Node view = loader.load();
             contentArea.getChildren().setAll(view);
+            setAktif(menuModerasi);
         } catch (Exception e) {
             System.out.println("Gagal memuat halaman Moderasi Admin");
             e.printStackTrace();

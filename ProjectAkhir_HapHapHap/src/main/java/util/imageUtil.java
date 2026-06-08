@@ -43,7 +43,7 @@ public class imageUtil {
                 img = new Image(is, 400, 400, true, true);
             }
             else {
-                File fileTarget = new File("HapHapHap/target/classes" + fullPath);
+                File fileTarget = new File("ProjectAkhir_HapHapHap/target/classes" + fullPath);
                 if(fileTarget.exists()){
                     img = new Image(fileTarget.toURI().toString(), 400, 400, true, true);
                 }
