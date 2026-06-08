@@ -17,10 +17,14 @@ import java.util.Locale;
 
 public class exploreController {
 
-    @FXML private TextField inputBahanField;
-    @FXML private FlowPane tagContainer;
-    @FXML private FlowPane resepContainer;
-    @FXML private TextField searchField;
+    @FXML
+    private TextField inputBahanField;
+    @FXML
+    private FlowPane tagContainer;
+    @FXML
+    private FlowPane resepContainer;
+    @FXML
+    private TextField searchField;
 
     private final RecipeService db = RecipeService.getInstance();
     private final List<String> listBahanTerpilih = new ArrayList<>();
@@ -71,3 +75,34 @@ public class exploreController {
             tagContainer.getChildren().add(tag);
         }
     }
+
+
+    @FXML
+    public void handleTerapkanFilter() {
+        terapkanSemuaFilter();
+    }
+
+    private void terapkanSemuaFilter() {
+        String keyword = searchField.getText() == null ? "" : searchField.getText().trim().toLowerCase(Locale.ROOT);
+        List<Resep> hasil = new ArrayList<>();
+
+        for (Resep resep : masterData) {
+            if (cocokKeyword(resep, keyword) && cocokKategori(resep) && cocokBahan(resep)) {
+                hasil.add(resep);
+            }
+        }
+        tampilkanKeLayar(hasil);
+    }
+
+    private boolean cocokKeyword(Resep resep, String keyword) {
+        if (keyword.isEmpty()) return true;
+        String judul = resep.getJudul() == null ? "" : resep.getJudul().toLowerCase(Locale.ROOT);
+        return judul.contains(keyword);
+    }
+
+    private boolean cocokKategori(Resep resep) {
+        if ("Semua".equalsIgnoreCase(kategoriAktif)) return true;
+        String kategoriResep = resep.getJenisMakanan();
+        return kategoriResep != null && kategoriResep.equalsIgnoreCase(kategoriAktif);
+    }
+}
