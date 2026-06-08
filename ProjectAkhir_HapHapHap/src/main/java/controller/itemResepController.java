@@ -135,4 +135,59 @@ public class itemResepController {
         }
     }
 
+    @FXML
+    public void handleEditAdmin(javafx.event.ActionEvent event) {
+        // Mencegah klik menyebar ke card utama (memicu detail view)
+        event.consume();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/add.fxml"));
+            Parent root = loader.load();
+
+            addResepController controller = loader.getController();
+            controller.setResepUntukDiedit(resepAktif);
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setData(Resep resep, exploreController parent) {
+        this.parentController = parent;
+        setData(resep);
+    }
+
+    @FXML
+    public void handleHapusAdmin(javafx.event.ActionEvent event) {
+        event.consume(); // Mencegah klik menyebar ke card utama (memicu detail view)
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Konfirmasi Hapus Resep");
+        alert.setHeaderText(null);
+        alert.setContentText("Apakah Anda benar-benar ingin menghapus resep '" + resepAktif.getJudul() + "' secara permanen?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            boolean sukses = RecipeService.getInstance().hapusResepPermanen(resepAktif.getIdResep());
+            if (sukses) {
+                Alert suksesAlert = new Alert(Alert.AlertType.INFORMATION);
+                suksesAlert.setTitle("Berhasil");
+                suksesAlert.setHeaderText(null);
+                suksesAlert.setContentText("Resep masakan berhasil dihapus.");
+                suksesAlert.showAndWait();
+
+                if (parentController != null) {
+                    parentController.refreshData();
+                }
+            } else {
+                Alert gagalAlert = new Alert(Alert.AlertType.ERROR);
+                gagalAlert.setTitle("Gagal");
+                gagalAlert.setHeaderText(null);
+                gagalAlert.setContentText("Gagal menghapus resep masakan.");
+                gagalAlert.showAndWait();
+            }
+        }
+    }
 }
