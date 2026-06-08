@@ -177,6 +177,8 @@ public class resepDB implements ResepDao {
     }
 
 
+
+
     @Override
     public boolean cekFavorit(int idUser, int idResep) {
         String sql = "SELECT * FROM favorit_user WHERE id_user = ? AND id_resep = ?";
