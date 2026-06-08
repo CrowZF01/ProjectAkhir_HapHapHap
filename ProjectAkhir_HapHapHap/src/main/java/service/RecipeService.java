@@ -107,13 +107,27 @@ public class RecipeService {
             try {
                 namaFileFoto = System.currentTimeMillis() + "_" + fotoTerpilih.getName().replaceAll("\\s+", "_");
 
-                File folderImages = new File("src/main/resources/images/");
-                if (!folderImages.exists()) {
-                    folderImages.mkdirs();
+                // 1. Simpan ke src/main/resources/images/ (Source)
+                File folderSrc = new File("src/main/resources/images/");
+                if (!folderSrc.exists()) {
+                    folderSrc.mkdirs();
+                }
+                File tujuanSrc = new File(folderSrc, namaFileFoto);
+                Files.copy(fotoTerpilih.toPath(), tujuanSrc.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                // 2. Simpan ke target/classes/images/ (Runtime Build Output)
+                File folderTarget = new File("target/classes/images/");
+                if (folderTarget.exists()) {
+                    File tujuanTarget = new File(folderTarget, namaFileFoto);
+                    Files.copy(fotoTerpilih.toPath(), tujuanTarget.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
 
-                File tujuan = new File(folderImages, namaFileFoto);
-                Files.copy(fotoTerpilih.toPath(), tujuan.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                // Fallback jika aplikasi dijalankan dari parent directory (Workspace Root)
+                File folderTargetAlt = new File("ProjectAkhir_HapHapHap/target/classes/images/");
+                if (folderTargetAlt.exists()) {
+                    File tujuanTargetAlt = new File(folderTargetAlt, namaFileFoto);
+                    Files.copy(fotoTerpilih.toPath(), tujuanTargetAlt.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException("Terjadi kesalahan saat mengunggah foto: " + e.getMessage());
@@ -188,13 +202,27 @@ public class RecipeService {
             try {
                 namaFileFoto = System.currentTimeMillis() + "_" + fotoTerpilih.getName().replaceAll("\\s+", "_");
 
-                File folderImages = new File("src/main/resources/images/");
-                if (!folderImages.exists()) {
-                    folderImages.mkdirs();
+                // 1. Simpan ke src/main/resources/images/ (Source)
+                File folderSrc = new File("src/main/resources/images/");
+                if (!folderSrc.exists()) {
+                    folderSrc.mkdirs();
+                }
+                File tujuanSrc = new File(folderSrc, namaFileFoto);
+                java.nio.file.Files.copy(fotoTerpilih.toPath(), tujuanSrc.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                // 2. Simpan ke target/classes/images/ (Runtime Build Output)
+                File folderTarget = new File("target/classes/images/");
+                if (folderTarget.exists()) {
+                    File tujuanTarget = new File(folderTarget, namaFileFoto);
+                    java.nio.file.Files.copy(fotoTerpilih.toPath(), tujuanTarget.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
                 }
 
-                File tujuan = new File(folderImages, namaFileFoto);
-                java.nio.file.Files.copy(fotoTerpilih.toPath(), tujuan.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                // Fallback jika aplikasi dijalankan dari parent directory (Workspace Root)
+                File folderTargetAlt = new File("ProjectAkhir_HapHapHap/target/classes/images/");
+                if (folderTargetAlt.exists()) {
+                    File tujuanTargetAlt = new File(folderTargetAlt, namaFileFoto);
+                    java.nio.file.Files.copy(fotoTerpilih.toPath(), tujuanTargetAlt.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException("Terjadi kesalahan saat mengunggah foto: " + e.getMessage());
