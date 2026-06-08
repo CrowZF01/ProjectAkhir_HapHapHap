@@ -70,13 +70,13 @@ public class RecipeService {
 
         int waktu = 0;
         int porsi = 0;
-
         try {
             waktu = waktuStr == null || waktuStr.isEmpty() ? 0 : Integer.parseInt(waktuStr);
             porsi = porsiStr == null || porsiStr.isEmpty() ? 0 : Integer.parseInt(porsiStr);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Estimasi Waktu dan Porsi harus berupa angka bulat!");
         }
+
 
 
         if (listBahan == null || listBahan.isEmpty()) {
@@ -120,15 +120,20 @@ public class RecipeService {
             }
         }
 
+        // Tentukan status awal berdasarkan role user saat ini
+        String status = "DRAFT";
+        if (util.sessionManager.isLogin() && "ADMIN".equalsIgnoreCase(util.sessionManager.getUser().getRole())) {
+            status = "PENDING";
+        }
+
         // Simpan ke database
         boolean sukses = resepDao.tambahResepLengkap(idUser, judul, idKategori, tingkatKepedasan,
                 waktu, porsi, langkahGabungan.toString(),
-                listBahan, namaFileFoto);
+                listBahan, namaFileFoto, status);
         if (!sukses) {
             throw new RuntimeException("Gagal menyimpan resep ke database. Silakan coba lagi.");
         }
     }
-
 
     public List<Resep> getPendingResep() {
         return resepDao.getPendingResep();
