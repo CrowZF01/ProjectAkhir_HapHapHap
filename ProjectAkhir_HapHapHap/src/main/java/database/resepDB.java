@@ -274,6 +274,63 @@ public class resepDB implements ResepDao {
         return list;
     }
 
+    // === TAMBAHKAN 2 METHOD INI DI DALAM CLASS resepDB ===
+
+    // Mengambil resep yang dibuat oleh user (My Recipes)
+    public List<Resep> getResepByPembuat(int idUser) {
+        List<Resep> list = new ArrayList<>();
+        String sql = BASE_QUERY + " WHERE resep.id_user = ? GROUP BY resep.id_resep";
+
+        try (Connection conn = util.databaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUser);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                list.add(mapToResep(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    // Menghapus resep secara permanen (Cascade Manual)
+    public boolean hapusResepPermanen(int idResep) {
+        String sqlBahan = "DELETE FROM resep_bahan WHERE id_resep = ?";
+        String sqlFav = "DELETE FROM favorit_user WHERE id_resep = ?";
+        String sqlResep = "DELETE FROM resep WHERE id_resep = ?";
+
+        try (Connection conn = util.databaseUtil.getConnection()) {
+            conn.setAutoCommit(false); // Mulai transaksi
+
+            try (PreparedStatement stmt1 = conn.prepareStatement(sqlBahan);
+                 PreparedStatement stmt2 = conn.prepareStatement(sqlFav);
+                 PreparedStatement stmt3 = conn.prepareStatement(sqlResep)) {
+
+                // Hapus relasi bahan
+                stmt1.setInt(1, idResep);
+                stmt1.executeUpdate();
+
+                // Hapus relasi dari favorit (jika ada yang memfavoritkan)
+                stmt2.setInt(1, idResep);
+                stmt2.executeUpdate();
+
+                // Hapus resep utamanya
+                stmt3.setInt(1, idResep);
+                int hasil = stmt3.executeUpdate();
+
+                conn.commit(); // Simpan perubahan
+                return hasil > 0;
+            } catch (SQLException e) {
+                conn.rollback(); // Batalkan jika ada error
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
     @Override
     public boolean cekFavorit(int idUser, int idResep) {
