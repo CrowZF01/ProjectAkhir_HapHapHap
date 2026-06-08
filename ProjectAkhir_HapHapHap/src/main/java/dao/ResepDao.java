@@ -12,7 +12,7 @@ public interface ResepDao {
     List<Resep> filterBerdasarkanBahan(List<String> bahanList);
     List<Resep> filterBerdasarkanKategori(String kategori);
     List<Bahan> getBahanByResep(int idResep);
-    boolean tambahResepLengkap(int idUser, String judul, int idKategori, int kepedasan, int waktu, int porsi, String langkah, List<String> bahanList, String foto);
+    boolean tambahResepLengkap(int idUser, String judul, int idKategori, int kepedasan, int waktu, int porsi, String langkah, List<String> bahanList, String foto, String status);
     List<Resep> getFavoritByUser(int idUser);
     List<Resep> getResepByPembuat(int idUser);
     boolean hapusResepPermanen(int idResep);
