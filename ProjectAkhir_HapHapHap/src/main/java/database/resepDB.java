@@ -332,6 +332,120 @@ public class resepDB implements ResepDao {
     }
 
 
+    // Mengambil resep yang berstatus PENDING (untuk Admin)
+    public List<Resep> getPendingResep() {
+        List<Resep> list = new ArrayList<>();
+        String sql = BASE_QUERY + " WHERE resep.status = 'PENDING' GROUP BY resep.id_resep";
+
+        try (Connection conn = util.databaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                list.add(mapToResep(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    // Mengupdate status resep (Approve/Reject)
+    public boolean updateResepStatus(int idResep, String status) {
+        String sql = "UPDATE resep SET status = ? WHERE id_resep = ?";
+
+        try (Connection conn = util.databaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, status);
+            stmt.setInt(2, idResep);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Mengedit seluruh data resep beserta bahan (dengan Transaksi SQL)
+    public boolean editResepLengkap(int idResep, int idKategori, String judul, int kepedasan, int waktu, int porsi,
+                                    String langkah, List<String> bahanList, String foto) {
+        try (Connection conn = databaseUtil.getConnection()) {
+            conn.setAutoCommit(false); // Transaksi aman
+            try {
+                // 1. Update data resep
+                String sqlResep;
+                if (foto != null) {
+                    sqlResep = "UPDATE resep SET id_kategori = ?, nama_resep = ?, langkah_pembuatan = ?, waktu_estimasi = ?, porsi_sajian = ?, tingkat_kepedasan = ?, foto = ? WHERE id_resep = ?";
+                } else {
+                    sqlResep = "UPDATE resep SET id_kategori = ?, nama_resep = ?, langkah_pembuatan = ?, waktu_estimasi = ?, porsi_sajian = ?, tingkat_kepedasan = ? WHERE id_resep = ?";
+                }
+
+                try (PreparedStatement stmtResep = conn.prepareStatement(sqlResep)) {
+                    stmtResep.setInt(1, idKategori);
+                    stmtResep.setString(2, judul);
+                    stmtResep.setString(3, langkah);
+                    stmtResep.setInt(4, waktu);
+                    stmtResep.setInt(5, porsi);
+                    stmtResep.setInt(6, kepedasan);
+                    if (foto != null) {
+                        stmtResep.setString(7, foto);
+                        stmtResep.setInt(8, idResep);
+                    } else {
+                        stmtResep.setInt(7, idResep);
+                    }
+                    stmtResep.executeUpdate();
+                }
+
+                // 2. Hapus bahan lama dari resep_bahan (relasinya)
+                String deleteRelasi = "DELETE FROM resep_bahan WHERE id_resep = ?";
+                try (PreparedStatement stmtDeleteRelasi = conn.prepareStatement(deleteRelasi)) {
+                    stmtDeleteRelasi.setInt(1, idResep);
+                    stmtDeleteRelasi.executeUpdate();
+                }
+
+                // 3. Masukkan bahan baru dan relasinya
+                String sqlBahan = "INSERT INTO bahan (nama_bahan) VALUES (?)";
+                String sqlAmbilIdBahan = "SELECT LAST_INSERT_ID()";
+                String sqlRelasi = "INSERT INTO resep_bahan (id_resep, id_bahan) VALUES (?, ?)";
+
+                try (PreparedStatement stmtBahan = conn.prepareStatement(sqlBahan);
+                     PreparedStatement stmtRelasi = conn.prepareStatement(sqlRelasi);
+                     Statement stmtIdBahan = conn.createStatement()) {
+
+                    for (String namaBahan : bahanList) {
+                        if (namaBahan.trim().isEmpty()) {
+                            continue;
+                        }
+
+                        stmtBahan.setString(1, namaBahan);
+                        int hasilBahan = stmtBahan.executeUpdate();
+
+                        if (hasilBahan > 0) {
+                            try (ResultSet rsBahan = stmtIdBahan.executeQuery(sqlAmbilIdBahan)) {
+                                if (rsBahan.next()) {
+                                    int idBahanBaru = rsBahan.getInt(1);
+
+                                    stmtRelasi.setInt(1, idResep);
+                                    stmtRelasi.setInt(2, idBahanBaru);
+                                    stmtRelasi.executeUpdate();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                conn.commit();
+                return true;
+            } catch (SQLException e) {
+                conn.rollback();
+                e.printStackTrace();
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
     @Override
     public boolean cekFavorit(int idUser, int idResep) {
         String sql = "SELECT * FROM favorit_user WHERE id_user = ? AND id_resep = ?";
