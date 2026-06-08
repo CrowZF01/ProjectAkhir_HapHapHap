@@ -175,4 +175,49 @@ public class resepDB implements ResepDao {
         }
         return list;
     }
+
+
+    @Override
+    public boolean cekFavorit(int idUser, int idResep) {
+        String sql = "SELECT * FROM favorit_user WHERE id_user = ? AND id_resep = ?";
+        try (Connection conn = databaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUser);
+            stmt.setInt(2, idResep);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean tambahKeFavorit(int idUser, int idResep) {
+        String sql = "INSERT INTO favorit_user (id_user, id_resep) VALUES (?, ?)";
+        try (Connection conn = databaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUser);
+            stmt.setInt(2, idResep);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean hapusFavorit(int idUser, int idResep) {
+        String sql = "DELETE FROM favorit_user WHERE id_user = ? AND id_resep = ?";
+        try (Connection conn = databaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUser);
+            stmt.setInt(2, idResep);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
