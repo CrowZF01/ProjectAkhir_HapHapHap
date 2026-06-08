@@ -175,7 +175,7 @@ public class resepDB implements ResepDao {
         }
         return list;
     }
-    
+
 
     // Method Transaction Super Aman untuk Insert 3 Tabel Sekaligus + Foto!
     public boolean tambahResepLengkap(int idUser, String judul, int idKategori, int kepedasan, int waktu, int porsi,
@@ -253,6 +253,26 @@ public class resepDB implements ResepDao {
         }
     }
 
+
+    // Mengambil daftar resep favorit milik user tertentu
+    public List<Resep> getFavoritByUser(int idUser) {
+        List<Resep> list = new ArrayList<>();
+        // INNER JOIN dengan tabel favorit_user
+        String sql = BASE_QUERY
+                + " INNER JOIN favorit_user ON resep.id_resep = favorit_user.id_resep WHERE favorit_user.id_user = ? GROUP BY resep.id_resep";
+
+        try (Connection conn = databaseUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUser);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                list.add(mapToResep(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
 
     @Override
