@@ -35,7 +35,7 @@ public class loginController {
             System.out.println("Login berhasil: " + username);
 
             Stage stage = (Stage) usernameField.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/home.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/home.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
@@ -53,7 +53,7 @@ public class loginController {
     public void pindahDaftar(){
         try {
             Stage stage = (Stage) usernameField.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/daftar.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/daftar.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
@@ -81,7 +81,7 @@ public class loginController {
             System.out.println("Masuk sebagai Guest");
 
             Stage stage = (Stage) usernameField.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/home.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/home.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);

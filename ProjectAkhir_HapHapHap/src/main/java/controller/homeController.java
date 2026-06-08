@@ -85,7 +85,7 @@ public class homeController {
     // Fungsi canggih untuk menyuntikkan (inject) halaman tanpa reload frame
     private void bukaExplore(String kategori) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/explore.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/explore.fxml"));
             Node view = loader.load();
 
             // Ambil controllernya untuk menyetel filter secara langsung
@@ -105,7 +105,7 @@ public class homeController {
         try {
             // Jika view belum pernah diload, maka load dari FXML dan isi datanya
             if (favoritView == null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/favorit.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/favorit.fxml"));
                 favoritView = loader.load();
                 favoritCtrl = loader.getController();
 
@@ -126,7 +126,7 @@ public class homeController {
     @FXML
     public void handleAddRecipe(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/add.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/add.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -140,7 +140,7 @@ public class homeController {
     public void handleLogout(ActionEvent event) {
         try {
             sessionManager.logout();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/login.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -156,7 +156,7 @@ public class homeController {
         try {
             // Jika view belum pernah diload, maka load dari FXML dan isi datanya
             if (myRecipesView == null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/myRecipes.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/myRecipes.fxml"));
                 myRecipesView = loader.load();
                 myRecipesCtrl = loader.getController();
 
@@ -176,7 +176,7 @@ public class homeController {
     @FXML
     public void pindahModerasi() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/moderasiAdmin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/moderasiAdmin.fxml"));
             Node view = loader.load();
             contentArea.getChildren().setAll(view);
         } catch (Exception e) {

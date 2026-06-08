@@ -57,7 +57,7 @@ public class registerController {
     private void kembaliKeLogin(){
         try {
             Stage stage = (Stage) usernameField.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/login.fxml"));
             Parent root = loader.load();
             stage.setScene(new Scene(root));
             stage.show();
@@ -68,7 +68,7 @@ public class registerController {
 
     public void handleKembali(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/com/felix_71241153/app/haphaphap/login.fxml")
+                getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/login.fxml")
         );
         Parent root = loader.load();
 

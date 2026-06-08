@@ -55,7 +55,7 @@ public class favoritController {
 
         for (Resep resep : listFavorit) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/itemRow.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/itemRow.fxml"));
                 HBox card = loader.load();
                 itemRowController controller = loader.getController();
 

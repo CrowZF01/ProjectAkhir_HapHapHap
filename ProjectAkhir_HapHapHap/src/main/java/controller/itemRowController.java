@@ -134,7 +134,7 @@ public class itemRowController {
     @FXML
     public void handleLihatResep(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/detail.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/detail.fxml"));
             Parent root = loader.load();
             detailController controller = loader.getController();
             controller.setResepData(resepAktif);
@@ -220,7 +220,7 @@ public class itemRowController {
     @FXML
     public void handleEdit(javafx.event.ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/add.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/add.fxml"));
             Parent root = loader.load();
 
             addResepController controller = loader.getController();

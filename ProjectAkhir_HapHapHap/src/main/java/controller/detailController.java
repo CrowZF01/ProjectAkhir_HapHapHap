@@ -159,7 +159,7 @@ public class detailController {
     private void handleKembali() {
         try {
             Stage stage = (Stage) judulResep.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/home.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/home.fxml"));
             Parent root = loader.load();
             stage.setScene(new Scene(root));
             stage.show();

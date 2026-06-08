@@ -117,7 +117,7 @@ public class itemResepController {
     public void handleLihatDetail(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/detail.fxml")
+                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/detail.fxml")
             );
 
             Parent root = loader.load();
@@ -140,7 +140,7 @@ public class itemResepController {
         // Mencegah klik menyebar ke card utama (memicu detail view)
         event.consume();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/add.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/add.fxml"));
             Parent root = loader.load();
 
             addResepController controller = loader.getController();

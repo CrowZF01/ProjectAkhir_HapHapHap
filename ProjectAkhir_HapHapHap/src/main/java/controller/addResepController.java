@@ -335,7 +335,7 @@ public class addResepController {
     private void kembaliKeHome(javafx.event.Event event) {
         try {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/home.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/home.fxml"));
             stage.setScene(new Scene(loader.load()));
             stage.show();
         } catch (Exception e) {

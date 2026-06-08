@@ -130,7 +130,7 @@ public class exploreController {
 
         for (Resep resep : daftarResep) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/itemResep.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/itemResep.fxml"));
                 VBox card = loader.load();
                 itemResepController controller = loader.getController();
                 controller.setData(resep, this);
