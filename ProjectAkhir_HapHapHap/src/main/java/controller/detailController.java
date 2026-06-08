@@ -155,5 +155,69 @@ public class detailController {
         }
     }
 
+    @FXML
+    private void handleKembali() {
+        try {
+            Stage stage = (Stage) judulResep.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/home.fxml"));
+            Parent root = loader.load();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void renderTombolFavorit() {
+        if (isFavorit) {
+            btnFavorit.setText("♥ Hapus Favorit");
+            // Warna merah kalau sudah favorit
+            btnFavorit.setStyle("-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 12; -fx-cursor: hand;");
+        } else {
+            btnFavorit.setText("♡ Simpan Favorit");
+            // Warna cokelat kalau belum
+            btnFavorit.setStyle("-fx-background-color: #A65021; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 12; -fx-cursor: hand;");
+        }
+    }
+
+    @FXML
+    public void handleToggleFavorit() {
+        if (!util.sessionManager.isLogin()) {
+            System.out.println("Harus login dulu!");
+            return;
+        }
+
+        int idUser = util.sessionManager.getUser().getId();
+
+        RecipeService.getInstance().toggleFavorit(idUser, resepAktif.getIdResep(), isFavorit);
+
+        // Balikkan status (Toggle) lalu render ulang tombolnya
+        isFavorit = !isFavorit;
+        renderTombolFavorit();
+    }
+
+    @FXML
+    public void handleEksporResep() {
+        if (this.resepAktif == null) {
+            return;
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Ekspor Resep ke TXT");
+
+        String fileName = resepAktif.getJudul().replaceAll(" ", "_") + ".txt";
+        fileChooser.setInitialFileName(fileName);
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        File file = fileChooser.showSaveDialog(btnFavorit.getScene().getWindow());
+
+        if (file != null) {
+            RecipeService.getInstance().eksporKeTxt(Collections.singletonList(resepAktif), file);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Ekspor Berhasil");
+            alert.setHeaderText(null);
+            alert.setContentText("Resep masakan berhasil diekspor");
+            alert.showAndWait();
+        }
+    }
 
 }
