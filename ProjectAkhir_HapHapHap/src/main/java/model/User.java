@@ -16,18 +16,18 @@ public class User {
         this.role = role;
     }
 
-    public User(int id, String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.role = "USER";
-    }
-
-    public User(int id, String username) {
-        this.id = id;
-        this.username = username;
-        this.role = "USER";
-    }
+//    public User(int id, String username, String password) {
+//        this.id = id;
+//        this.username = username;
+//        this.password = password;
+//        this.role = "USER";
+//    }
+//
+//    public User(int id, String username) {
+//        this.id = id;
+//        this.username = username;
+//        this.role = "USER";
+//    }
 
     public int getId() {
         return id;

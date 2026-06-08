@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import util.sessionManager;
@@ -31,6 +32,7 @@ public class homeController {
     @FXML private Label menuFavorit;
     @FXML private Label menuMyRecipes;
     @FXML private Label menuModerasi;
+    @FXML private Button logoutLabel;
     @FXML private javafx.scene.control.Button btnAddRecipe;
 
     @FXML
@@ -48,6 +50,9 @@ public class homeController {
                 btnAddRecipe.setManaged(false);
                 menuModerasi.setVisible(false);
                 menuModerasi.setManaged(false);
+                if (logoutLabel != null) {
+                    logoutLabel.setText("\uD83D\uDEAA Login");
+                }
             } else if ("ADMIN".equalsIgnoreCase(role)) {
                 menuModerasi.setVisible(true);
                 menuModerasi.setManaged(true);
@@ -55,9 +60,15 @@ public class homeController {
                 menuFavorit.setManaged(true);
                 menuMyRecipes.setVisible(false);
                 menuMyRecipes.setManaged(false);
+                if (logoutLabel != null) {
+                    logoutLabel.setText("\uD83D\uDEAA Logout");
+                }
             } else {
                 menuModerasi.setVisible(false);
                 menuModerasi.setManaged(false);
+                if (logoutLabel != null) {
+                    logoutLabel.setText("\uD83D\uDEAA Logout");
+                }
             }
         } else {
             menuFavorit.setVisible(false);
@@ -68,6 +79,9 @@ public class homeController {
             btnAddRecipe.setManaged(false);
             menuModerasi.setVisible(false);
             menuModerasi.setManaged(false);
+            if (logoutLabel != null) {
+                logoutLabel.setText("\uD83D\uDEAA Logout");
+            }
         }
 
         bukaExplore("Semua");

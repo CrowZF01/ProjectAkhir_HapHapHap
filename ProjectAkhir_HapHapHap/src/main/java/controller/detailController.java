@@ -182,16 +182,20 @@ public class detailController {
 
     @FXML
     public void handleToggleFavorit() {
-        if (!util.sessionManager.isLogin()) {
-            System.out.println("Harus login dulu!");
+        if (!util.sessionManager.isLogin() || util.sessionManager.getUser().getUsername().equalsIgnoreCase("GUEST")) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Akses Ditolak");
+            alert.setHeaderText(null);
+            alert.setContentText("Anda harus login terlebih dahulu untuk bisa menyimpan resep ke daftar favorit");
+            alert.showAndWait();
+
+            System.out.println("Akses ditolak: User GUEST mencoba menambah favorit.");
+
             return;
         }
-
         int idUser = util.sessionManager.getUser().getId();
 
         RecipeService.getInstance().toggleFavorit(idUser, resepAktif.getIdResep(), isFavorit);
-
-        // Balikkan status (Toggle) lalu render ulang tombolnya
         isFavorit = !isFavorit;
         renderTombolFavorit();
     }
