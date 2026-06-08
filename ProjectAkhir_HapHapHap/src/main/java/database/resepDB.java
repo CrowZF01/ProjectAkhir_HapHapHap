@@ -175,7 +175,83 @@ public class resepDB implements ResepDao {
         }
         return list;
     }
+    
 
+    // Method Transaction Super Aman untuk Insert 3 Tabel Sekaligus + Foto!
+    public boolean tambahResepLengkap(int idUser, String judul, int idKategori, int kepedasan, int waktu, int porsi,
+                                      String langkah, List<String> bahanList, String foto, String status) {
+        try (Connection conn = databaseUtil.getConnection()) {
+
+            // 1. Simpan data resep
+            String sqlResep = "INSERT INTO resep (id_user, id_kategori, nama_resep, langkah_pembuatan, waktu_estimasi, porsi_sajian, tingkat_kepedasan, foto, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmtResep = conn.prepareStatement(sqlResep);
+
+            stmtResep.setInt(1, idUser);
+            stmtResep.setInt(2, idKategori);
+            stmtResep.setString(3, judul);
+            stmtResep.setString(4, langkah);
+            stmtResep.setInt(5, waktu);
+            stmtResep.setInt(6, porsi);
+            stmtResep.setInt(7, kepedasan);
+            stmtResep.setString(8, foto);
+            stmtResep.setString(9, status);
+
+            int hasilResep = stmtResep.executeUpdate();
+
+            if (hasilResep <= 0) {
+                return false;
+            }
+
+            // 2. Ambil id resep terakhir
+            int idResepBaru = -1;
+            Statement stmtId = conn.createStatement();
+            ResultSet rsId = stmtId.executeQuery("SELECT LAST_INSERT_ID()");
+
+            if (rsId.next()) {
+                idResepBaru = rsId.getInt(1);
+            }
+
+            if (idResepBaru == -1) {
+                return false;
+            }
+
+            // 3. Simpan bahan dan relasi resep_bahan
+            String sqlBahan = "INSERT INTO bahan (nama_bahan) VALUES (?)";
+            String sqlAmbilIdBahan = "SELECT LAST_INSERT_ID()";
+            String sqlRelasi = "INSERT INTO resep_bahan (id_resep, id_bahan) VALUES (?, ?)";
+
+            PreparedStatement stmtBahan = conn.prepareStatement(sqlBahan);
+            PreparedStatement stmtRelasi = conn.prepareStatement(sqlRelasi);
+            Statement stmtIdBahan = conn.createStatement();
+
+            for (String namaBahan : bahanList) {
+                if (namaBahan.trim().isEmpty()) {
+                    continue;
+                }
+
+                stmtBahan.setString(1, namaBahan);
+                int hasilBahan = stmtBahan.executeUpdate();
+
+                if (hasilBahan > 0) {
+                    ResultSet rsBahan = stmtIdBahan.executeQuery(sqlAmbilIdBahan);
+
+                    if (rsBahan.next()) {
+                        int idBahanBaru = rsBahan.getInt(1);
+
+                        stmtRelasi.setInt(1, idResepBaru);
+                        stmtRelasi.setInt(2, idBahanBaru);
+                        stmtRelasi.executeUpdate();
+                    }
+                }
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
 
