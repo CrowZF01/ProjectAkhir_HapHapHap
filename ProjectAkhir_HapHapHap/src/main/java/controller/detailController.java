@@ -1,4 +1,159 @@
 package controller;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import model.Bahan;
+import model.Resep;
+import service.RecipeService;
+import util.imageUtil;
+import javafx.stage.FileChooser;
+import java.io.File;
+import java.util.Collections;
+import javafx.scene.control.Alert;
+
+import java.util.List;
+
 public class detailController {
+
+    @FXML
+    private VBox bahanContainer;
+
+    @FXML
+    private ImageView fotoResepDetail;
+
+    @FXML
+    private Label judulResep;
+
+    @FXML
+    private Label kategoriLabel;
+
+    @FXML
+    private VBox langkahContainer;
+
+    @FXML
+    private Label pedasLabel;
+
+    @FXML
+    private Label placeholderIcon;
+
+    @FXML
+    private Label waktuLabel;
+    @FXML private Label porsiLabel;
+
+    @FXML private Button btnFavorit;
+    private Resep resepAktif;
+    private boolean isFavorit = false;
+
+    public void setResepData(Resep resep){
+        this.resepAktif = resep;
+        judulResep.setText(resep.getJudul());
+        waktuLabel.setText("⏱ " + resep.getEstimasiWaktu() + "m");
+        pedasLabel.setText("🌶 Level " + resep.getTingkatKepedasan());
+        kategoriLabel.setText(resep.getJenisMakanan().toUpperCase());
+        porsiLabel.setText("🍽 " + resep.getPorsiSajian() + " Porsi");
+
+        // Render langkah memasak secara dinamis
+        langkahContainer.getChildren().clear();
+        if (resep.getLangkahPembuatan() != null && !resep.getLangkahPembuatan().isEmpty()) {
+            String[] steps = resep.getLangkahPembuatan().split("\\r?\\n");
+            int stepNum = 1;
+            for (String stepText : steps) {
+                if (stepText.trim().isEmpty()) {
+                    continue;
+                }
+
+                // Bersihkan angka prefix (seperti "1. ")
+                String cleanText = stepText.trim().replaceAll("^\\d+([\\.\\)\\s]+|\\s+)", "");
+                if (cleanText.trim().isEmpty()) {
+                    continue;
+                }
+
+                HBox row = new HBox(20);
+                row.setAlignment(javafx.geometry.Pos.TOP_LEFT);
+
+                // Angka langkah besar berwarna cokelat muda
+                Label stepNumber = new Label(String.valueOf(stepNum));
+                stepNumber.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #EBD6C8; -fx-min-width: 35px; -fx-alignment: center-right; -fx-translate-y: -8;");
+
+                VBox textBox = new VBox(5);
+                Label descLabel = new Label(cleanText);
+                descLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #444444; -fx-line-spacing: 4px;");
+                descLabel.setWrapText(true);
+                HBox.setHgrow(textBox, javafx.scene.layout.Priority.ALWAYS);
+
+                textBox.getChildren().add(descLabel);
+                row.getChildren().addAll(stepNumber, textBox);
+                langkahContainer.getChildren().add(row);
+
+                stepNum++;
+            }
+        } else {
+            Label kosong = new Label("Langkah memasak tidak tersedia.");
+            kosong.setStyle("-fx-text-fill: #888888; -fx-font-size: 14px; -fx-font-style: italic;");
+            langkahContainer.getChildren().add(kosong);
+        }
+
+        if (util.sessionManager.isLogin()) {
+            int idUser = util.sessionManager.getUser().getId();
+            isFavorit = RecipeService.getInstance().cekFavorit(idUser, resep.getIdResep());
+            renderTombolFavorit(); // Ubah tampilan tombol sesuai status
+        }
+
+        try {
+            Image img = imageUtil.getImage(resep.getFoto());
+
+            if (img != null) {
+                fotoResepDetail.setImage(img);
+                placeholderIcon.setVisible(false);
+            } else {
+                fotoResepDetail.setImage(null);
+                placeholderIcon.setVisible(true);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Gambar tidak ditemukan");
+            fotoResepDetail.setImage(null);
+            placeholderIcon.setVisible(true);
+        }
+        loadBahan(resep.getIdResep());
+    }
+
+    private void loadBahan(int idResep) {
+        bahanContainer.getChildren().clear();
+        List<Bahan> listBahan = RecipeService.getInstance().getBahanByResep(idResep);
+        if (listBahan.isEmpty()){
+            Label kosong = new Label("Daftar bahan tidak tersedia");
+            kosong.setStyle("-fx-text-fill: #888888; -fx-font-size: 14px; -fx-font-style: italic;");
+            bahanContainer.getChildren().add(kosong);
+            return;
+        }
+
+        for (Bahan bahan : listBahan){
+            HBox row = new HBox(10);
+            row.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+            // Bullets warna cokelat hangat ●
+            Label dot = new Label("●");
+            dot.setStyle("-fx-text-fill: #A65021; -fx-font-size: 10px;");
+
+            Label namaBahan = new Label(bahan.getNamaBahan());
+            namaBahan.setStyle("-fx-text-fill: #444444; -fx-font-size: 14px; -fx-font-weight: bold;");
+            namaBahan.setWrapText(true);
+            HBox.setHgrow(namaBahan, javafx.scene.layout.Priority.ALWAYS);
+
+            row.getChildren().addAll(dot, namaBahan);
+            bahanContainer.getChildren().add(row);
+        }
+    }
+
+
 }
