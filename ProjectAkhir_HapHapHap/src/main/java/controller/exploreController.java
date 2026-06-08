@@ -17,14 +17,10 @@ import java.util.Locale;
 
 public class exploreController {
 
-    @FXML
-    private TextField inputBahanField;
-    @FXML
-    private FlowPane tagContainer;
-    @FXML
-    private FlowPane resepContainer;
-    @FXML
-    private TextField searchField;
+    @FXML private TextField inputBahanField;
+    @FXML private FlowPane tagContainer;
+    @FXML private FlowPane resepContainer;
+    @FXML private TextField searchField;
 
     private final RecipeService db = RecipeService.getInstance();
     private final List<String> listBahanTerpilih = new ArrayList<>();
@@ -76,7 +72,6 @@ public class exploreController {
         }
     }
 
-
     @FXML
     public void handleTerapkanFilter() {
         terapkanSemuaFilter();
@@ -104,5 +99,52 @@ public class exploreController {
         if ("Semua".equalsIgnoreCase(kategoriAktif)) return true;
         String kategoriResep = resep.getJenisMakanan();
         return kategoriResep != null && kategoriResep.equalsIgnoreCase(kategoriAktif);
+    }
+
+    private boolean cocokBahan(Resep resep) {
+        if (listBahanTerpilih.isEmpty()) return true;
+        String bahanResep = resep.getBahan() == null ? "" : resep.getBahan().toLowerCase(Locale.ROOT);
+        for (String bahan : listBahanTerpilih) {
+            if (!bahanResep.contains(bahan.toLowerCase(Locale.ROOT))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean containsIgnoreCase(List<String> list, String value) {
+        for (String item : list) {
+            if (item.equalsIgnoreCase(value)) return true;
+        }
+        return false;
+    }
+
+    private void tampilkanKeLayar(List<Resep> daftarResep) {
+        resepContainer.getChildren().clear();
+        if (daftarResep == null || daftarResep.isEmpty()) {
+            Label kosong = new Label("Tidak ada resep yang cocok.");
+            kosong.setStyle("-fx-text-fill: #888888; -fx-font-size: 14px;");
+            resepContainer.getChildren().add(kosong);
+            return;
+        }
+
+        for (Resep resep : daftarResep) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/copy_Teletubies_haphaphap/itemResep.fxml"));
+                VBox card = loader.load();
+                itemResepController controller = loader.getController();
+                controller.setData(resep, this);
+                resepContainer.getChildren().add(card);
+            } catch (Exception e) {
+                System.out.println("Gagal memuat itemResep.fxml");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void refreshData() {
+        masterData.clear();
+        masterData.addAll(db.getAllResep());
+        terapkanSemuaFilter();
     }
 }
