@@ -35,6 +35,7 @@ public class exploreController {
     public void initialize() {
         masterData.clear();
         masterData.addAll(db.getAllResep());
+        // Listener untuk textfield search agar bisa auto filter setiap keyup
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             terapkanSemuaFilter();
         });
@@ -80,6 +81,7 @@ public class exploreController {
         terapkanSemuaFilter();
     }
 
+    // Fungsi yang memfilter data resep berdasarkan keyword, kategori, dan bahan
     private void terapkanSemuaFilter() {
         String keyword = "";
         if (searchField.getText() != null) {
