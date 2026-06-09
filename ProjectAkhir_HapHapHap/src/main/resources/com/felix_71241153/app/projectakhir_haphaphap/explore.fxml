@@ -47,7 +47,7 @@
                         <Label style="-fx-font-size: 11px;" text="Include Ingredients" textFill="#888888" />
                         <HBox alignment="CENTER" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-padding: 0 10;">
                             <children>
-                                <TextField fx:id="inputBahanField" onAction="#handleTambahBahan" promptText="e.g. Nasi, Ayam" style="-fx-background-color: transparent; -fx-border-width: 0; -fx-font-size: 12px; -fx-padding: 10 5;" HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="inputBahanField" onAction="#handleTambahBahan" promptText="ex. Nasi, Ayam" style="-fx-background-color: transparent; -fx-border-width: 0; -fx-font-size: 12px; -fx-padding: 10 5;" HBox.hgrow="ALWAYS" />
                                 <Button onAction="#handleTambahBahan" style="-fx-background-color: transparent; -fx-text-fill: #A65021; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;" text="⊕" />
                             </children>
                         </HBox>

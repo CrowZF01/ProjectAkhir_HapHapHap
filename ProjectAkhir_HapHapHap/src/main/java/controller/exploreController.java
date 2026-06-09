@@ -52,6 +52,7 @@ public class exploreController {
         terapkanSemuaFilter();
     }
 
+    // filtering menggunakan bahan yang dipilih
     @FXML
     public void handleTambahBahan() {
         String bahan = inputBahanField.getText().trim();
@@ -62,6 +63,7 @@ public class exploreController {
         }
     }
 
+    // me-render list bahan terpilih
     private void renderTags() {
         tagContainer.getChildren().clear();
         for (String bahan : listBahanTerpilih) {
@@ -96,6 +98,7 @@ public class exploreController {
         tampilkanKeLayar(hasil);
     }
 
+    // memfilter data resep berdasarkan keyword yang dimasukkan
     private boolean cocokKeyword(Resep resep, String keyword) {
         if (keyword.isEmpty()) {
             return true;
@@ -107,6 +110,7 @@ public class exploreController {
         return judul.contains(keyword);
     }
 
+    // memfilter data resep berdasarkan kategori yang dipilih
     private boolean cocokKategori(Resep resep) {
         if ("Semua".equalsIgnoreCase(kategoriAktif)) {
             return true;
@@ -122,6 +126,7 @@ public class exploreController {
         }
     }
 
+    // memfilter data resep berdasarkan bahan yang dipilih
     private boolean cocokBahan(Resep resep) {
         if (listBahanTerpilih.isEmpty()) {
             return true;
@@ -139,6 +144,7 @@ public class exploreController {
         return true;
     }
 
+    // mengecek apakah list mengandung bahan yang sama
     private boolean containsIgnoreCase(List<String> list, String value) {
         for (String item : list) {
             if (item.equalsIgnoreCase(value)) {
