@@ -14,13 +14,10 @@ public class loginController {
 
     @FXML
     private TextField usernameField;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private Label statusLabel;
-
     @FXML
     public void handleLogin() {
         if (statusLabel != null) {

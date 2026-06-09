@@ -23,7 +23,9 @@ public class myRecipesController {
     public void loadDataMyRecipes() {
         myRecipesContainer.getChildren().clear();
 
-        if (!sessionManager.isLogin()) return;
+        if (!sessionManager.isLogin()){
+            return;
+        }
 
         int idUser = sessionManager.getUser().getId();
         List<Resep> listResep = RecipeService.getInstance().getResepByPembuat(idUser);

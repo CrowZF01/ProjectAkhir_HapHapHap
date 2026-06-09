@@ -47,7 +47,6 @@ public class itemResepController {
 
     public void setData(Resep resep) {
         this.resepAktif = resep;
-
         judulLabel.setText(resep.getJudul());
 
         String kategori = resep.getJenisMakanan();

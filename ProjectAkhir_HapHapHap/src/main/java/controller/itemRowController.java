@@ -61,7 +61,11 @@ public class itemRowController {
         this.parentController = parent;
 
         judulLabel.setText(resep.getJudul());
-        kategoriLabel.setText(resep.getJenisMakanan() != null ? resep.getJenisMakanan().toUpperCase() : "UMUM");
+        if (resep.getJenisMakanan() != null) {
+            kategoriLabel.setText(resep.getJenisMakanan().toUpperCase());
+        } else {
+            kategoriLabel.setText("UMUM");
+        }
         waktuLabel.setText("⏱ " + resep.getEstimasiWaktu() + " Menit");
         porsiLabel.setText("🍽 " + resep.getPorsiSajian() + " Porsi");
         pedasLabel.setText("🌶 Level " + resep.getTingkatKepedasan());

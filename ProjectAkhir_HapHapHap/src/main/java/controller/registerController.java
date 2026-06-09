@@ -38,7 +38,7 @@ public class registerController {
         try {
             UserService.getInstance().register(username, password, confirmPassword);
             statusLabel.setText("Akun berhasil dibuat untuk: " + username);
-            statusLabel.setStyle("-fx-text-fill: #E74C3C;");
+            statusLabel.setStyle("-fx-text-fill: #28A745;");
 
             PauseTransition jeda = new PauseTransition(Duration.seconds(1.5));
             jeda.setOnFinished(new EventHandler<ActionEvent>() {
