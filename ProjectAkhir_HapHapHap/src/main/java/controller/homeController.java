@@ -122,7 +122,7 @@ public class homeController {
         setAktif(menuMinuman);
     }
 
-    // Fungsi canggih untuk menyuntikkan (inject) halaman tanpa reload frame
+    // Fungsi canggih menyuntikkan (inject) halaman tanpa reload frame
     private void bukaExplore(String kategori) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/explore.fxml"));

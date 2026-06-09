@@ -51,8 +51,8 @@ public class RecipeService {
     }
 
     public void simpanResep(int idUser, String judul, String kategori, int tingkatKepedasan,
-                            String waktuStr, String porsiStr, List<String> listBahan,
-                            List<String> listLangkah, File fotoTerpilih) {
+            String waktuStr, String porsiStr, List<String> listBahan,
+            List<String> listLangkah, File fotoTerpilih) {
 
         if (judul == null || judul.trim().isEmpty()) {
             throw new IllegalArgumentException("Judul resep tidak boleh kosong!");
@@ -76,8 +76,6 @@ public class RecipeService {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Estimasi Waktu dan Porsi harus berupa angka bulat!");
         }
-
-
 
         if (listBahan == null || listBahan.isEmpty()) {
             throw new IllegalArgumentException("Minimal harus ada 1 bahan yang diisi!");
@@ -158,8 +156,8 @@ public class RecipeService {
     }
 
     public void perbaruiResep(int idResep, String judul, String kategori, int tingkatKepedasan,
-                              String waktuStr, String porsiStr, List<String> listBahan,
-                              List<String> listLangkah, File fotoTerpilih) {
+            String waktuStr, String porsiStr, List<String> listBahan,
+            List<String> listLangkah, File fotoTerpilih) {
 
         if (judul == null || judul.trim().isEmpty()) {
             throw new IllegalArgumentException("Judul resep tidak boleh kosong!");
@@ -208,20 +206,23 @@ public class RecipeService {
                     folderSrc.mkdirs();
                 }
                 File tujuanSrc = new File(folderSrc, namaFileFoto);
-                java.nio.file.Files.copy(fotoTerpilih.toPath(), tujuanSrc.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                java.nio.file.Files.copy(fotoTerpilih.toPath(), tujuanSrc.toPath(),
+                        java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
                 // 2. Simpan ke target/classes/images/ (Runtime Build Output)
                 File folderTarget = new File("target/classes/images/");
                 if (folderTarget.exists()) {
                     File tujuanTarget = new File(folderTarget, namaFileFoto);
-                    java.nio.file.Files.copy(fotoTerpilih.toPath(), tujuanTarget.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                    java.nio.file.Files.copy(fotoTerpilih.toPath(), tujuanTarget.toPath(),
+                            java.nio.file.StandardCopyOption.REPLACE_EXISTING);
                 }
 
                 // Fallback jika aplikasi dijalankan dari parent directory (Workspace Root)
                 File folderTargetAlt = new File("ProjectAkhir_HapHapHap/target/classes/images/");
                 if (folderTargetAlt.exists()) {
                     File tujuanTargetAlt = new File(folderTargetAlt, namaFileFoto);
-                    java.nio.file.Files.copy(fotoTerpilih.toPath(), tujuanTargetAlt.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                    java.nio.file.Files.copy(fotoTerpilih.toPath(), tujuanTargetAlt.toPath(),
+                            java.nio.file.StandardCopyOption.REPLACE_EXISTING);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

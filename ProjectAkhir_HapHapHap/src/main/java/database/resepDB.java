@@ -38,8 +38,8 @@ public class resepDB implements ResepDao {
         String sql = BASE_QUERY + " WHERE resep.status = 'PUBLISHED' GROUP BY resep.id_resep";
 
         try (Connection conn = databaseUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 list.add(mapToResep(rs));
@@ -54,7 +54,7 @@ public class resepDB implements ResepDao {
         String sql = BASE_QUERY + " WHERE resep.id_resep = ? GROUP BY resep.id_resep";
 
         try (Connection conn = databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idResep);
             ResultSet rs = stmt.executeQuery();
@@ -74,7 +74,7 @@ public class resepDB implements ResepDao {
                 + " WHERE resep.status = 'PUBLISHED' AND resep.nama_resep LIKE ? GROUP BY resep.id_resep";
 
         try (Connection conn = databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, "%" + nama + "%");
             ResultSet rs = stmt.executeQuery();
@@ -102,7 +102,7 @@ public class resepDB implements ResepDao {
         }
 
         try (Connection conn = databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sqlBuilder.toString())) {
+                PreparedStatement stmt = conn.prepareStatement(sqlBuilder.toString())) {
 
             for (int i = 0; i < bahanList.size(); i++) {
                 stmt.setString(i + 1, "%" + bahanList.get(i) + "%");
@@ -141,7 +141,7 @@ public class resepDB implements ResepDao {
         String sql = BASE_QUERY
                 + " WHERE resep.status = 'PUBLISHED' AND kategori.nama_kategori = ? GROUP BY resep.id_resep";
         try (Connection conn = databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, kategori);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -160,7 +160,7 @@ public class resepDB implements ResepDao {
                 JOIN resep_bahan ON bahan.id_bahan = resep_bahan.id_bahan
                 WHERE resep_bahan.id_resep = ?""";
         try (Connection conn = databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idResep);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -176,10 +176,9 @@ public class resepDB implements ResepDao {
         return list;
     }
 
-
     // Method Transaction Super Aman untuk Insert 3 Tabel Sekaligus + Foto!
     public boolean tambahResepLengkap(int idUser, String judul, int idKategori, int kepedasan, int waktu, int porsi,
-                                      String langkah, List<String> bahanList, String foto, String status) {
+            String langkah, List<String> bahanList, String foto, String status) {
         try (Connection conn = databaseUtil.getConnection()) {
 
             // 1. Simpan data resep
@@ -253,7 +252,6 @@ public class resepDB implements ResepDao {
         }
     }
 
-
     // Mengambil daftar resep favorit milik user tertentu
     public List<Resep> getFavoritByUser(int idUser) {
         List<Resep> list = new ArrayList<>();
@@ -262,7 +260,7 @@ public class resepDB implements ResepDao {
                 + " INNER JOIN favorit_user ON resep.id_resep = favorit_user.id_resep WHERE favorit_user.id_user = ? GROUP BY resep.id_resep";
 
         try (Connection conn = databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idUser);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -282,7 +280,7 @@ public class resepDB implements ResepDao {
         String sql = BASE_QUERY + " WHERE resep.id_user = ? GROUP BY resep.id_resep";
 
         try (Connection conn = util.databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idUser);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -304,8 +302,8 @@ public class resepDB implements ResepDao {
             conn.setAutoCommit(false); // Mulai transaksi
 
             try (PreparedStatement stmt1 = conn.prepareStatement(sqlBahan);
-                 PreparedStatement stmt2 = conn.prepareStatement(sqlFav);
-                 PreparedStatement stmt3 = conn.prepareStatement(sqlResep)) {
+                    PreparedStatement stmt2 = conn.prepareStatement(sqlFav);
+                    PreparedStatement stmt3 = conn.prepareStatement(sqlResep)) {
 
                 // Hapus relasi bahan
                 stmt1.setInt(1, idResep);
@@ -331,14 +329,13 @@ public class resepDB implements ResepDao {
         return false;
     }
 
-
     // Mengambil resep yang berstatus PENDING (untuk Admin)
     public List<Resep> getPendingResep() {
         List<Resep> list = new ArrayList<>();
         String sql = BASE_QUERY + " WHERE resep.status = 'PENDING' GROUP BY resep.id_resep";
 
         try (Connection conn = util.databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 list.add(mapToResep(rs));
@@ -354,7 +351,7 @@ public class resepDB implements ResepDao {
         String sql = "UPDATE resep SET status = ? WHERE id_resep = ?";
 
         try (Connection conn = util.databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, status);
             stmt.setInt(2, idResep);
             return stmt.executeUpdate() > 0;
@@ -366,7 +363,7 @@ public class resepDB implements ResepDao {
 
     // Mengedit seluruh data resep beserta bahan (dengan Transaksi SQL)
     public boolean editResepLengkap(int idResep, int idKategori, String judul, int kepedasan, int waktu, int porsi,
-                                    String langkah, List<String> bahanList, String foto) {
+            String langkah, List<String> bahanList, String foto) {
         try (Connection conn = databaseUtil.getConnection()) {
             conn.setAutoCommit(false); // Transaksi aman
             try {
@@ -407,8 +404,8 @@ public class resepDB implements ResepDao {
                 String sqlRelasi = "INSERT INTO resep_bahan (id_resep, id_bahan) VALUES (?, ?)";
 
                 try (PreparedStatement stmtBahan = conn.prepareStatement(sqlBahan);
-                     PreparedStatement stmtRelasi = conn.prepareStatement(sqlRelasi);
-                     Statement stmtIdBahan = conn.createStatement()) {
+                        PreparedStatement stmtRelasi = conn.prepareStatement(sqlRelasi);
+                        Statement stmtIdBahan = conn.createStatement()) {
 
                     for (String namaBahan : bahanList) {
                         if (namaBahan.trim().isEmpty()) {
@@ -445,12 +442,11 @@ public class resepDB implements ResepDao {
         }
     }
 
-
     @Override
     public boolean cekFavorit(int idUser, int idResep) {
         String sql = "SELECT * FROM favorit_user WHERE id_user = ? AND id_resep = ?";
         try (Connection conn = databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idUser);
             stmt.setInt(2, idResep);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -466,7 +462,7 @@ public class resepDB implements ResepDao {
     public boolean tambahKeFavorit(int idUser, int idResep) {
         String sql = "INSERT INTO favorit_user (id_user, id_resep) VALUES (?, ?)";
         try (Connection conn = databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idUser);
             stmt.setInt(2, idResep);
             return stmt.executeUpdate() > 0;
@@ -480,7 +476,7 @@ public class resepDB implements ResepDao {
     public boolean hapusFavorit(int idUser, int idResep) {
         String sql = "DELETE FROM favorit_user WHERE id_user = ? AND id_resep = ?";
         try (Connection conn = databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idUser);
             stmt.setInt(2, idResep);
             return stmt.executeUpdate() > 0;

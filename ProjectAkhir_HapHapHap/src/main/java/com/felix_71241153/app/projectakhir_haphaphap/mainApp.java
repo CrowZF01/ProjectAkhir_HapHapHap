@@ -1,6 +1,5 @@
 package com.felix_71241153.app.projectakhir_haphaphap;
 
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

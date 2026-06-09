@@ -16,7 +16,7 @@ public class Resep {
     }
 
     public Resep(int idResep, String judul, String jenisMakanan, int tingkatKepedasan,
-                 String bahan, String langkahPembuatan, int estimasiWaktu, int porsiSajian, String foto, String status) {
+            String bahan, String langkahPembuatan, int estimasiWaktu, int porsiSajian, String foto, String status) {
         this.idResep = idResep;
         this.judul = judul;
         this.jenisMakanan = jenisMakanan;
@@ -30,7 +30,7 @@ public class Resep {
     }
 
     public Resep(int idResep, String judul, String jenisMakanan, int tingkatKepedasan,
-                 String bahan, String langkahPembuatan, int estimasiWaktu, int porsiSajian, String foto) {
+            String bahan, String langkahPembuatan, int estimasiWaktu, int porsiSajian, String foto) {
         this.idResep = idResep;
         this.judul = judul;
         this.jenisMakanan = jenisMakanan;
