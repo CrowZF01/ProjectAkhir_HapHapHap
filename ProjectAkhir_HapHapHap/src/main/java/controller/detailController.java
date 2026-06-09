@@ -188,40 +188,37 @@ public class detailController {
             alert.setHeaderText(null);
             alert.setContentText("Anda harus login terlebih dahulu untuk bisa menyimpan resep ke daftar favorit");
             alert.showAndWait();
-
             System.out.println("Akses ditolak: User GUEST mencoba menambah favorit.");
-
             return;
         }
         int idUser = util.sessionManager.getUser().getId();
-
         RecipeService.getInstance().toggleFavorit(idUser, resepAktif.getIdResep(), isFavorit);
         isFavorit = !isFavorit;
         renderTombolFavorit();
     }
 
-    @FXML
-    public void handleEksporResep() {
-        if (this.resepAktif == null) {
-            return;
-        }
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Ekspor Resep ke TXT");
-
-        String fileName = resepAktif.getJudul().replaceAll(" ", "_") + ".txt";
-        fileChooser.setInitialFileName(fileName);
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-        File file = fileChooser.showSaveDialog(btnFavorit.getScene().getWindow());
-
-        if (file != null) {
-            RecipeService.getInstance().eksporKeTxt(Collections.singletonList(resepAktif), file);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Ekspor Berhasil");
-            alert.setHeaderText(null);
-            alert.setContentText("Resep masakan berhasil diekspor");
-            alert.showAndWait();
-        }
-    }
+//    @FXML
+//    public void handleEksporResep() {
+//        if (this.resepAktif == null) {
+//            return;
+//        }
+//
+//        FileChooser fileChooser = new FileChooser();
+//        fileChooser.setTitle("Ekspor Resep ke TXT");
+//
+//        String fileName = resepAktif.getJudul().replaceAll(" ", "_") + ".txt";
+//        fileChooser.setInitialFileName(fileName);
+//        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+//        File file = fileChooser.showSaveDialog(btnFavorit.getScene().getWindow());
+//
+//        if (file != null) {
+//            RecipeService.getInstance().eksporKeTxt(Collections.singletonList(resepAktif), file);
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Ekspor Berhasil");
+//            alert.setHeaderText(null);
+//            alert.setContentText("Resep masakan berhasil diekspor");
+//            alert.showAndWait();
+//        }
+//    }
 
 }

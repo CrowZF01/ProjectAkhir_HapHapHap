@@ -14,16 +14,6 @@ import util.sessionManager;
 import javafx.scene.control.Label;
 
 public class homeController {
-
-    private Node exploreView;
-    private exploreController exploreCtrl;
-
-    private Node favoritView;
-    private favoritController favoritCtrl;
-
-    private Node myRecipesView;
-    private myRecipesController myRecipesCtrl;
-    
     @FXML private StackPane contentArea;
     @FXML private Label menuSemua;
     @FXML private Label menuMakanan;
@@ -34,6 +24,12 @@ public class homeController {
     @FXML private Label menuModerasi;
     @FXML private Button logoutLabel;
     @FXML private javafx.scene.control.Button btnAddRecipe;
+
+    private Node favoritView;
+    private favoritController favoritCtrl;
+
+    private Node myRecipesView;
+    private myRecipesController myRecipesCtrl;
 
     @FXML
     public void initialize() {
@@ -80,7 +76,7 @@ public class homeController {
             menuModerasi.setVisible(false);
             menuModerasi.setManaged(false);
             if (logoutLabel != null) {
-                logoutLabel.setText("\uD83D\uDEAA Logout");
+                logoutLabel.setText("\uD83D\uDEAA Login");
             }
         }
 

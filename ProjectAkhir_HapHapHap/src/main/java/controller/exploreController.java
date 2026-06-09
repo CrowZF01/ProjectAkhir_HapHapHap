@@ -25,14 +25,12 @@ public class exploreController {
     private final RecipeService db = RecipeService.getInstance();
     private final List<String> listBahanTerpilih = new ArrayList<>();
     private final List<Resep> masterData = new ArrayList<>();
-
     private String kategoriAktif = "Semua";
 
     @FXML
     public void initialize() {
         masterData.clear();
         masterData.addAll(db.getAllResep());
-
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             terapkanSemuaFilter();
         });
@@ -77,10 +75,24 @@ public class exploreController {
         terapkanSemuaFilter();
     }
 
-    private void terapkanSemuaFilter() {
-        String keyword = searchField.getText() == null ? "" : searchField.getText().trim().toLowerCase(Locale.ROOT);
-        List<Resep> hasil = new ArrayList<>();
+//    private void terapkanSemuaFilter() {
+//        String keyword = searchField.getText() == null ? "" : searchField.getText().trim().toLowerCase(Locale.ROOT);
+//        List<Resep> hasil = new ArrayList<>();
+//
+//        for (Resep resep : masterData) {
+//            if (cocokKeyword(resep, keyword) && cocokKategori(resep) && cocokBahan(resep)) {
+//                hasil.add(resep);
+//            }
+//        }
+//        tampilkanKeLayar(hasil);
+//    }
 
+    private void terapkanSemuaFilter() {
+        String keyword = "";
+        if (searchField.getText() != null) {
+            keyword = searchField.getText().trim().toLowerCase(Locale.ROOT);
+        }
+        List<Resep> hasil = new ArrayList<>();
         for (Resep resep : masterData) {
             if (cocokKeyword(resep, keyword) && cocokKategori(resep) && cocokBahan(resep)) {
                 hasil.add(resep);
@@ -90,22 +102,42 @@ public class exploreController {
     }
 
     private boolean cocokKeyword(Resep resep, String keyword) {
-        if (keyword.isEmpty()) return true;
-        String judul = resep.getJudul() == null ? "" : resep.getJudul().toLowerCase(Locale.ROOT);
+        if (keyword.isEmpty()){
+            return true;
+        }
+        String judul = "";
+        if (resep.getJudul() != null) {
+            judul = resep.getJudul().toLowerCase(Locale.ROOT);
+        }
         return judul.contains(keyword);
     }
 
     private boolean cocokKategori(Resep resep) {
-        if ("Semua".equalsIgnoreCase(kategoriAktif)) return true;
+        if ("Semua".equalsIgnoreCase(kategoriAktif)){
+            return true;
+        }
         String kategoriResep = resep.getJenisMakanan();
-        return kategoriResep != null && kategoriResep.equalsIgnoreCase(kategoriAktif);
+        if (kategoriResep == null) {
+            return false;
+        }
+        if (kategoriResep.equalsIgnoreCase(kategoriAktif)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean cocokBahan(Resep resep) {
-        if (listBahanTerpilih.isEmpty()) return true;
-        String bahanResep = resep.getBahan() == null ? "" : resep.getBahan().toLowerCase(Locale.ROOT);
+        if (listBahanTerpilih.isEmpty()){
+            return true;
+        }
+        String bahanResep = "";
+        if (resep.getBahan() != null) {
+            bahanResep = resep.getBahan().toLowerCase(Locale.ROOT);
+        }
         for (String bahan : listBahanTerpilih) {
-            if (!bahanResep.contains(bahan.toLowerCase(Locale.ROOT))) {
+            String bahanYangDicari = bahan.toLowerCase(Locale.ROOT);
+            if (!bahanResep.contains(bahanYangDicari)) {
                 return false;
             }
         }
@@ -114,7 +146,9 @@ public class exploreController {
 
     private boolean containsIgnoreCase(List<String> list, String value) {
         for (String item : list) {
-            if (item.equalsIgnoreCase(value)) return true;
+            if (item.equalsIgnoreCase(value)){
+                return true;
+            }
         }
         return false;
     }
