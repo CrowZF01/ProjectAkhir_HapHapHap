@@ -10,15 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class resepDB implements ResepDao {
-
+    // variabel static simpan instance
     private static resepDB instance;
 
+    // private const (cegah manual new)
     private resepDB() {
     }
 
+    // akses ke instance
     public static resepDB getInstance() {
         if (instance == null) {
-            instance = new resepDB();
+            instance = new resepDB(); // buat instance jika belum ada
         }
         return instance;
     }

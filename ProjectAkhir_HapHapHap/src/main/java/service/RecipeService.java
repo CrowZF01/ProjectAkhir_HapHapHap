@@ -15,10 +15,12 @@ public class RecipeService {
     private static RecipeService instance;
     private final ResepDao resepDao;
 
+    // hubungkan ke DAO
     private RecipeService() {
-        this.resepDao = resepDB.getInstance();
+        this.resepDao = resepDB.getInstance(); // konek ke singleton resepDB
     }
 
+    // akses instance
     public static RecipeService getInstance() {
         if (instance == null) {
             instance = new RecipeService();

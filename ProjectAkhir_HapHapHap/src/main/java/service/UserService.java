@@ -10,10 +10,12 @@ public class UserService {
     private static UserService instance;
     private final UserDao userDao;
 
+    // hubungkan ke DAO
     private UserService() {
-        this.userDao = userDB.getInstance();
+        this.userDao = userDB.getInstance(); // konek ke singleton userDB
     }
 
+    // akses instance
     public static UserService getInstance() {
         if (instance == null) {
             instance = new UserService();

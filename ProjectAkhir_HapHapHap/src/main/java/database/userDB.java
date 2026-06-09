@@ -10,11 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class userDB implements UserDao {
-
+    // simpan instance
     private static userDB instance;
 
-    private userDB() {}
+    // private const
+    private userDB() {
+    }
 
+    // akses instance
     public static userDB getInstance() {
         if (instance == null) {
             instance = new userDB();
@@ -26,7 +29,7 @@ public class userDB implements UserDao {
         String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
 
         try (Connection conn = databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
             stmt.setString(2, password);
@@ -38,8 +41,7 @@ public class userDB implements UserDao {
                         rs.getInt("id_user"),
                         rs.getString("username"),
                         rs.getString("password"),
-                        rs.getString("role")
-                );
+                        rs.getString("role"));
             }
 
         } catch (SQLException e) {
@@ -53,7 +55,7 @@ public class userDB implements UserDao {
         String sql = "INSERT INTO user (username, password) VALUES (?, ?)";
 
         try (Connection conn = databaseUtil.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
             stmt.setString(2, password);
