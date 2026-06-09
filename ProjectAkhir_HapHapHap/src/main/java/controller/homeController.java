@@ -14,16 +14,26 @@ import util.sessionManager;
 import javafx.scene.control.Label;
 
 public class homeController {
-    @FXML private StackPane contentArea;
-    @FXML private Label menuSemua;
-    @FXML private Label menuMakanan;
-    @FXML private Label menuDessert;
-    @FXML private Label menuMinuman;
-    @FXML private Label menuFavorit;
-    @FXML private Label menuMyRecipes;
-    @FXML private Label menuModerasi;
-    @FXML private Button logoutLabel;
-    @FXML private javafx.scene.control.Button btnAddRecipe;
+    @FXML
+    private StackPane contentArea;
+    @FXML
+    private Label menuSemua;
+    @FXML
+    private Label menuMakanan;
+    @FXML
+    private Label menuDessert;
+    @FXML
+    private Label menuMinuman;
+    @FXML
+    private Label menuFavorit;
+    @FXML
+    private Label menuMyRecipes;
+    @FXML
+    private Label menuModerasi;
+    @FXML
+    private Button logoutLabel;
+    @FXML
+    private javafx.scene.control.Button btnAddRecipe;
 
     private Node favoritView;
     private favoritController favoritCtrl;
@@ -85,11 +95,12 @@ public class homeController {
     }
 
     private void setAktif(Label activeLabel) {
-        Label[] menus = {menuSemua, menuMakanan, menuDessert, menuMinuman, menuFavorit, menuMyRecipes, menuModerasi};
+        Label[] menus = { menuSemua, menuMakanan, menuDessert, menuMinuman, menuFavorit, menuMyRecipes, menuModerasi };
         for (Label menu : menus) {
             if (menu != null) {
                 if (menu == activeLabel) {
-                    menu.setStyle("-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555; -fx-font-weight: bold;");
+                    menu.setStyle(
+                            "-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555; -fx-font-weight: bold;");
                 } else {
                     menu.setStyle("-fx-cursor: hand; -fx-font-size: 13px; -fx-text-fill: #555555;");
                 }
@@ -97,7 +108,7 @@ public class homeController {
         }
     }
 
-    // ====== FUNGSI SIDEBAR NAVIGASI ======
+    // SIDEBAR NAVIGASI
     @FXML
     public void kategoriSemua() {
         bukaExplore("Semua");
@@ -122,10 +133,11 @@ public class homeController {
         setAktif(menuMinuman);
     }
 
-    // Fungsi canggih menyuntikkan (inject) halaman tanpa reload frame
+    // inject halaman tanpa reload frame
     private void bukaExplore(String kategori) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/explore.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/explore.fxml"));
             Node view = loader.load();
 
             // Ambil controllernya untuk menyetel filter secara langsung
@@ -145,15 +157,16 @@ public class homeController {
         try {
             // Jika view belum pernah diload, maka load dari FXML dan isi datanya
             if (favoritView == null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/favorit.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/favorit.fxml"));
                 favoritView = loader.load();
                 favoritCtrl = loader.getController();
 
-                // Panggil loadData HANYA SEKALI di sini saat inisialisasi awal
+                // Panggil loadData sekali saat inisialisasi awal
                 favoritCtrl.loadDataFavorit();
             }
 
-            // Tampilkan view yang sudah di-cache tanpa me-load ulang data dari nol
+            // Tampilkan view tanpa me-load ulang data dari nol
             contentArea.getChildren().setAll(favoritView);
             setAktif(menuFavorit);
 
@@ -167,7 +180,8 @@ public class homeController {
     @FXML
     public void handleAddRecipe(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/add.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/add.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -181,7 +195,8 @@ public class homeController {
     public void handleLogout(ActionEvent event) {
         try {
             sessionManager.logout();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/login.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -191,17 +206,17 @@ public class homeController {
         }
     }
 
-    // Tambahkan method ini di bawah method pindahFavorit()
     @FXML
     public void pindahMyRecipes() {
         try {
-            // Jika view belum pernah diload, maka load dari FXML dan isi datanya
             if (myRecipesView == null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/myRecipes.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/myRecipes.fxml"));
                 myRecipesView = loader.load();
                 myRecipesCtrl = loader.getController();
 
-                // Panggil loadData HANYA SEKALI di sini untuk mencegah freeze saat klik bolak-balik
+                // Panggil loadData HANYA SEKALI di sini untuk mencegah freeze saat klik
+                // bolak-balik
                 myRecipesCtrl.loadDataMyRecipes();
             }
 
@@ -218,7 +233,8 @@ public class homeController {
     @FXML
     public void pindahModerasi() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/moderasiAdmin.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/moderasiAdmin.fxml"));
             Node view = loader.load();
             contentArea.getChildren().setAll(view);
             setAktif(menuModerasi);

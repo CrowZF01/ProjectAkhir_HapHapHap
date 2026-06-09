@@ -17,10 +17,14 @@ import java.util.Locale;
 
 public class exploreController {
 
-    @FXML private TextField inputBahanField;
-    @FXML private FlowPane tagContainer;
-    @FXML private FlowPane resepContainer;
-    @FXML private TextField searchField;
+    @FXML
+    private TextField inputBahanField;
+    @FXML
+    private FlowPane tagContainer;
+    @FXML
+    private FlowPane resepContainer;
+    @FXML
+    private TextField searchField;
 
     private final RecipeService db = RecipeService.getInstance();
     private final List<String> listBahanTerpilih = new ArrayList<>();
@@ -61,7 +65,8 @@ public class exploreController {
         tagContainer.getChildren().clear();
         for (String bahan : listBahanTerpilih) {
             Label tag = new Label(bahan + "  ✕");
-            tag.setStyle("-fx-background-color: #FBE2D1; -fx-text-fill: #555555; -fx-font-size: 11px; -fx-padding: 5 8; -fx-background-radius: 4; -fx-cursor: hand;");
+            tag.setStyle(
+                    "-fx-background-color: #FBE2D1; -fx-text-fill: #555555; -fx-font-size: 11px; -fx-padding: 5 8; -fx-background-radius: 4; -fx-cursor: hand;");
             tag.setOnMouseClicked(event -> {
                 listBahanTerpilih.remove(bahan);
                 renderTags();
@@ -74,18 +79,6 @@ public class exploreController {
     public void handleTerapkanFilter() {
         terapkanSemuaFilter();
     }
-
-//    private void terapkanSemuaFilter() {
-//        String keyword = searchField.getText() == null ? "" : searchField.getText().trim().toLowerCase(Locale.ROOT);
-//        List<Resep> hasil = new ArrayList<>();
-//
-//        for (Resep resep : masterData) {
-//            if (cocokKeyword(resep, keyword) && cocokKategori(resep) && cocokBahan(resep)) {
-//                hasil.add(resep);
-//            }
-//        }
-//        tampilkanKeLayar(hasil);
-//    }
 
     private void terapkanSemuaFilter() {
         String keyword = "";
@@ -102,7 +95,7 @@ public class exploreController {
     }
 
     private boolean cocokKeyword(Resep resep, String keyword) {
-        if (keyword.isEmpty()){
+        if (keyword.isEmpty()) {
             return true;
         }
         String judul = "";
@@ -113,7 +106,7 @@ public class exploreController {
     }
 
     private boolean cocokKategori(Resep resep) {
-        if ("Semua".equalsIgnoreCase(kategoriAktif)){
+        if ("Semua".equalsIgnoreCase(kategoriAktif)) {
             return true;
         }
         String kategoriResep = resep.getJenisMakanan();
@@ -128,7 +121,7 @@ public class exploreController {
     }
 
     private boolean cocokBahan(Resep resep) {
-        if (listBahanTerpilih.isEmpty()){
+        if (listBahanTerpilih.isEmpty()) {
             return true;
         }
         String bahanResep = "";
@@ -146,7 +139,7 @@ public class exploreController {
 
     private boolean containsIgnoreCase(List<String> list, String value) {
         for (String item : list) {
-            if (item.equalsIgnoreCase(value)){
+            if (item.equalsIgnoreCase(value)) {
                 return true;
             }
         }
@@ -162,13 +155,15 @@ public class exploreController {
             return;
         }
 
+        // tampilkan resep
         for (Resep resep : daftarResep) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/itemResep.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/itemResep.fxml"));
                 VBox card = loader.load();
-                itemResepController controller = loader.getController();
-                controller.setData(resep, this);
-                resepContainer.getChildren().add(card);
+                itemResepController controller = loader.getController(); // dapat controllerny
+                controller.setData(resep, this); // kirim data resep dan controller explore agar bisa refresh data
+                resepContainer.getChildren().add(card); // kartu visual fxml nya dimasukkan
             } catch (Exception e) {
                 System.out.println("Gagal memuat itemResep.fxml");
                 e.printStackTrace();

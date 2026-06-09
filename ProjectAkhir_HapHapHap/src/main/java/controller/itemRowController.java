@@ -134,11 +134,11 @@ public class itemRowController {
         }
     }
 
-
     @FXML
     public void handleLihatResep(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/detail.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/detail.fxml"));
             Parent root = loader.load();
             detailController controller = loader.getController();
             controller.setResepData(resepAktif);
@@ -188,7 +188,8 @@ public class itemRowController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Konfirmasi Hapus Resep");
         alert.setHeaderText(null);
-        alert.setContentText("Apakah Anda yakin ingin menghapus resep '" + resepAktif.getJudul() + "' secara permanen?");
+        alert.setContentText(
+                "Apakah Anda yakin ingin menghapus resep '" + resepAktif.getJudul() + "' secara permanen?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -215,16 +216,18 @@ public class itemRowController {
 
     @FXML
     public void handlePublish() {
+        // ubah status ke pending
         boolean sukses = RecipeService.getInstance().updateResepStatus(resepAktif.getIdResep(), "PENDING");
         if (sukses && parentController instanceof myRecipesController) {
-            ((myRecipesController) parentController).loadDataMyRecipes();
+            ((myRecipesController) parentController).loadDataMyRecipes(); // update UI
         }
     }
 
     @FXML
     public void handleEdit(javafx.event.ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/add.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/add.fxml"));
             Parent root = loader.load();
 
             addResepController controller = loader.getController();
@@ -240,6 +243,7 @@ public class itemRowController {
 
     @FXML
     public void handleApprove() {
+        // ubah status ke published
         boolean sukses = RecipeService.getInstance().updateResepStatus(resepAktif.getIdResep(), "PUBLISHED");
         if (sukses && parentController instanceof moderasiAdminController) {
             ((moderasiAdminController) parentController).loadDataPendingRecipes();

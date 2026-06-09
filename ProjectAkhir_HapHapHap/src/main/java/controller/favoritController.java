@@ -16,8 +16,10 @@ import java.util.List;
 
 public class favoritController {
 
-    @FXML private VBox favoritContainer;
-    @FXML private Button btnEksporSemua;
+    @FXML
+    private VBox favoritContainer;
+    @FXML
+    private Button btnEksporSemua;
 
     private List<Resep> listFavorit;
 
@@ -55,7 +57,8 @@ public class favoritController {
 
         for (Resep resep : listFavorit) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/itemRow.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/itemRow.fxml"));
                 HBox card = loader.load();
                 itemRowController controller = loader.getController();
 

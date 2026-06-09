@@ -44,7 +44,6 @@ public class itemResepController {
     private Resep resepAktif;
     private exploreController parentController;
 
-
     public void setData(Resep resep) {
         this.resepAktif = resep;
         judulLabel.setText(resep.getJudul());
@@ -116,8 +115,7 @@ public class itemResepController {
     public void handleLihatDetail(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/detail.fxml")
-            );
+                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/detail.fxml"));
 
             Parent root = loader.load();
 
@@ -139,7 +137,8 @@ public class itemResepController {
         // Mencegah klik menyebar ke card utama (memicu detail view)
         event.consume();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/add.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/add.fxml"));
             Parent root = loader.load();
 
             addResepController controller = loader.getController();
@@ -165,7 +164,8 @@ public class itemResepController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Konfirmasi Hapus Resep");
         alert.setHeaderText(null);
-        alert.setContentText("Apakah Anda benar-benar ingin menghapus resep '" + resepAktif.getJudul() + "' secara permanen?");
+        alert.setContentText(
+                "Apakah Anda benar-benar ingin menghapus resep '" + resepAktif.getJudul() + "' secara permanen?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -178,7 +178,7 @@ public class itemResepController {
                 suksesAlert.showAndWait();
 
                 if (parentController != null) {
-                    parentController.refreshData();
+                    parentController.refreshData(); // Halaman memuat ulang data
                 }
             } else {
                 Alert gagalAlert = new Alert(Alert.AlertType.ERROR);

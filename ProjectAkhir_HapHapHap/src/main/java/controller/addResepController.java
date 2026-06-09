@@ -64,14 +64,13 @@ public class addResepController {
         tambahBarisLangkah();
     }
 
-    // ================= UPLOAD FOTO (GAYA SIBARISTA) =================
+    // upload foto
     @FXML
     public void handleUploadFoto(MouseEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Pilih Foto Resep");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
-        );
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         File selectedFile = fileChooser.showOpenDialog(stage);
@@ -79,16 +78,13 @@ public class addResepController {
         if (selectedFile != null) {
             fotoTerpilih = selectedFile;
             // Tampilkan ke layar
-//            Image image = new Image(selectedFile.toURI().toString());
-            // Tampilkan ke layar dengan membatasi resolusi maksimum (misal 500x500 pixel)
-// Parameter: (url, requestedWidth, requestedHeight, preserveRatio, smooth)
             Image image = new Image(selectedFile.toURI().toString(), 500, 500, true, true);
             previewFoto.setImage(image);
-            placeholderFoto.setVisible(false); // Sembunyikan tulisan "Pilih Foto"
+            placeholderFoto.setVisible(false);
         }
     }
 
-    // ================= DYNAMIC UI FIELDS =================
+    // tambah baris bahan (kondisi insert baru)
     @FXML
     public void tambahBarisBahan() {
         HBox row = new HBox(12);
@@ -99,7 +95,8 @@ public class addResepController {
 
         TextField input = new TextField();
         input.setPromptText("Contoh: 1 Siung Bawang");
-        input.setStyle("-fx-background-color: #F5F5F5; -fx-padding: 10 12; -fx-background-radius: 6; -fx-border-width: 0;");
+        input.setStyle(
+                "-fx-background-color: #F5F5F5; -fx-padding: 10 12; -fx-background-radius: 6; -fx-border-width: 0;");
         HBox.setHgrow(input, Priority.ALWAYS);
 
         Label hapus = new Label("✕");
@@ -115,6 +112,7 @@ public class addResepController {
         bahanContainer.getChildren().add(row);
     }
 
+    // tambah baris langkah (kondisi insert baru)
     @FXML
     public void tambahBarisLangkah() {
         HBox row = new HBox(15);
@@ -127,14 +125,14 @@ public class addResepController {
         input.setPrefRowCount(2);
         input.setWrapText(true);
         input.setPromptText("Jelaskan langkahnya...");
-        input.setStyle("-fx-control-inner-background: #F5F5F5; -fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-width: 0;");
+        input.setStyle(
+                "-fx-control-inner-background: #F5F5F5; -fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-width: 0;");
         HBox.setHgrow(input, Priority.ALWAYS);
 
         row.getChildren().addAll(nomor, input);
         langkahContainer.getChildren().add(row);
     }
 
-    // ================= KEPEDASAN TOGGLE =================
     @FXML
     public void setPedas0() {
         updateKepedasan(0, btnLv0);
@@ -167,6 +165,7 @@ public class addResepController {
         btnAktif.setStyle(aktif);
     }
 
+    // Kondisi mau diedit (manggil data)
     public void tambahBarisBahanDanIsi(String isi) {
         HBox row = new HBox(12);
         row.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
@@ -177,7 +176,8 @@ public class addResepController {
         TextField input = new TextField();
         input.setText(isi);
         input.setPromptText("Contoh: 1 Siung Bawang");
-        input.setStyle("-fx-background-color: #F5F5F5; -fx-padding: 10 12; -fx-background-radius: 6; -fx-border-width: 0;");
+        input.setStyle(
+                "-fx-background-color: #F5F5F5; -fx-padding: 10 12; -fx-background-radius: 6; -fx-border-width: 0;");
         HBox.setHgrow(input, Priority.ALWAYS);
 
         Label hapus = new Label("✕");
@@ -193,6 +193,7 @@ public class addResepController {
         bahanContainer.getChildren().add(row);
     }
 
+    // Kondisi mau diedit (manggil data)
     public void tambahBarisLangkahDanIsi(String isi) {
         HBox row = new HBox(15);
         row.setAlignment(javafx.geometry.Pos.TOP_LEFT);
@@ -205,7 +206,8 @@ public class addResepController {
         input.setPrefRowCount(2);
         input.setWrapText(true);
         input.setPromptText("Jelaskan langkahnya...");
-        input.setStyle("-fx-control-inner-background: #F5F5F5; -fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-width: 0;");
+        input.setStyle(
+                "-fx-control-inner-background: #F5F5F5; -fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-width: 0;");
         HBox.setHgrow(input, Priority.ALWAYS);
 
         row.getChildren().addAll(nomor, input);
@@ -214,6 +216,7 @@ public class addResepController {
 
     public void setResepUntukDiedit(model.Resep resep) {
         this.resepUntukDiedit = resep;
+        // kondisi edit
         if (resep != null) {
             titleLabel.setText("Edit Resep Anda");
             btnSimpan.setText("Update Resep");
@@ -224,10 +227,14 @@ public class addResepController {
             inputPorsi.setText(String.valueOf(resep.getPorsiSajian()));
 
             // Set kepedasan
-            if (resep.getTingkatKepedasan() == 0) setPedas0();
-            else if (resep.getTingkatKepedasan() == 1) setPedas1();
-            else if (resep.getTingkatKepedasan() == 2) setPedas2();
-            else if (resep.getTingkatKepedasan() == 3) setPedas3();
+            if (resep.getTingkatKepedasan() == 0)
+                setPedas0();
+            else if (resep.getTingkatKepedasan() == 1)
+                setPedas1();
+            else if (resep.getTingkatKepedasan() == 2)
+                setPedas2();
+            else if (resep.getTingkatKepedasan() == 3)
+                setPedas3();
 
             // Set Bahan
             bahanContainer.getChildren().clear();
@@ -276,7 +283,8 @@ public class addResepController {
         String porsiStr = inputPorsi.getText();
 
         if (sessionManager.getUser() == null) {
-            showAlert(Alert.AlertType.ERROR, "Akses Ditolak", "Anda harus login terlebih dahulu untuk menyimpan resep!");
+            showAlert(Alert.AlertType.ERROR, "Akses Ditolak",
+                    "Anda harus login terlebih dahulu untuk menyimpan resep!");
             return;
         }
         int idUser = sessionManager.getUser().getId();
@@ -301,7 +309,8 @@ public class addResepController {
 
         try {
             if (resepUntukDiedit != null) {
-                RecipeService.getInstance().perbaruiResep(resepUntukDiedit.getIdResep(), judul, kategori, tingkatKepedasan,
+                RecipeService.getInstance().perbaruiResep(resepUntukDiedit.getIdResep(), judul, kategori,
+                        tingkatKepedasan,
                         waktuStr, porsiStr, listBahan, listLangkah, fotoTerpilih);
                 showAlert(Alert.AlertType.INFORMATION, "Sukses", "Resep berhasil diperbarui!");
             } else {
@@ -317,7 +326,7 @@ public class addResepController {
         }
     }
 
-    // ================= FUNGSI ALERT =================
+    // Alert function
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -326,7 +335,6 @@ public class addResepController {
         alert.showAndWait();
     }
 
-    // ================= NAVIGASI =================
     @FXML
     public void handleKembali(javafx.event.Event event) {
         kembaliKeHome(event);
@@ -335,7 +343,8 @@ public class addResepController {
     private void kembaliKeHome(javafx.event.Event event) {
         try {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/home.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/home.fxml"));
             stage.setScene(new Scene(loader.load()));
             stage.show();
         } catch (Exception e) {

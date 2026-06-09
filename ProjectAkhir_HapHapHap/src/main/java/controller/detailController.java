@@ -47,13 +47,15 @@ public class detailController {
 
     @FXML
     private Label waktuLabel;
-    @FXML private Label porsiLabel;
+    @FXML
+    private Label porsiLabel;
 
-    @FXML private Button btnFavorit;
+    @FXML
+    private Button btnFavorit;
     private Resep resepAktif;
     private boolean isFavorit = false;
 
-    public void setResepData(Resep resep){
+    public void setResepData(Resep resep) {
         this.resepAktif = resep;
         judulResep.setText(resep.getJudul());
         waktuLabel.setText("⏱ " + resep.getEstimasiWaktu() + "m");
@@ -61,7 +63,7 @@ public class detailController {
         kategoriLabel.setText(resep.getJenisMakanan().toUpperCase());
         porsiLabel.setText("🍽 " + resep.getPorsiSajian() + " Porsi");
 
-        // Render langkah memasak secara dinamis
+        // Render langkah memasak
         langkahContainer.getChildren().clear();
         if (resep.getLangkahPembuatan() != null && !resep.getLangkahPembuatan().isEmpty()) {
             String[] steps = resep.getLangkahPembuatan().split("\\r?\\n");
@@ -71,7 +73,7 @@ public class detailController {
                     continue;
                 }
 
-                // Bersihkan angka prefix (seperti "1. ")
+                // Bersihkan angka
                 String cleanText = stepText.trim().replaceAll("^\\d+([\\.\\)\\s]+|\\s+)", "");
                 if (cleanText.trim().isEmpty()) {
                     continue;
@@ -82,7 +84,8 @@ public class detailController {
 
                 // Angka langkah besar berwarna cokelat muda
                 Label stepNumber = new Label(String.valueOf(stepNum));
-                stepNumber.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #EBD6C8; -fx-min-width: 35px; -fx-alignment: center-right; -fx-translate-y: -8;");
+                stepNumber.setStyle(
+                        "-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #EBD6C8; -fx-min-width: 35px; -fx-alignment: center-right; -fx-translate-y: -8;");
 
                 VBox textBox = new VBox(5);
                 Label descLabel = new Label(cleanText);
@@ -130,18 +133,18 @@ public class detailController {
     private void loadBahan(int idResep) {
         bahanContainer.getChildren().clear();
         List<Bahan> listBahan = RecipeService.getInstance().getBahanByResep(idResep);
-        if (listBahan.isEmpty()){
+        if (listBahan.isEmpty()) {
             Label kosong = new Label("Daftar bahan tidak tersedia");
             kosong.setStyle("-fx-text-fill: #888888; -fx-font-size: 14px; -fx-font-style: italic;");
             bahanContainer.getChildren().add(kosong);
             return;
         }
-
-        for (Bahan bahan : listBahan){
+        // Looping untuk tampilkan bahan yang ada berdasarkan id resep
+        for (Bahan bahan : listBahan) {
             HBox row = new HBox(10);
             row.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 
-            // Bullets warna cokelat hangat ●
+            // Bullets warna cokelat
             Label dot = new Label("●");
             dot.setStyle("-fx-text-fill: #A65021; -fx-font-size: 10px;");
 
@@ -159,7 +162,8 @@ public class detailController {
     private void handleKembali() {
         try {
             Stage stage = (Stage) judulResep.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/home.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/felix_71241153/app/ProjectAkhir_HapHapHap/home.fxml"));
             Parent root = loader.load();
             stage.setScene(new Scene(root));
             stage.show();
@@ -172,11 +176,13 @@ public class detailController {
         if (isFavorit) {
             btnFavorit.setText("♥ Hapus Favorit");
             // Warna merah kalau sudah favorit
-            btnFavorit.setStyle("-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 12; -fx-cursor: hand;");
+            btnFavorit.setStyle(
+                    "-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 12; -fx-cursor: hand;");
         } else {
             btnFavorit.setText("♡ Simpan Favorit");
             // Warna cokelat kalau belum
-            btnFavorit.setStyle("-fx-background-color: #A65021; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 12; -fx-cursor: hand;");
+            btnFavorit.setStyle(
+                    "-fx-background-color: #A65021; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6; -fx-padding: 12; -fx-cursor: hand;");
         }
     }
 
@@ -196,29 +202,5 @@ public class detailController {
         isFavorit = !isFavorit;
         renderTombolFavorit();
     }
-
-//    @FXML
-//    public void handleEksporResep() {
-//        if (this.resepAktif == null) {
-//            return;
-//        }
-//
-//        FileChooser fileChooser = new FileChooser();
-//        fileChooser.setTitle("Ekspor Resep ke TXT");
-//
-//        String fileName = resepAktif.getJudul().replaceAll(" ", "_") + ".txt";
-//        fileChooser.setInitialFileName(fileName);
-//        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-//        File file = fileChooser.showSaveDialog(btnFavorit.getScene().getWindow());
-//
-//        if (file != null) {
-//            RecipeService.getInstance().eksporKeTxt(Collections.singletonList(resepAktif), file);
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Ekspor Berhasil");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Resep masakan berhasil diekspor");
-//            alert.showAndWait();
-//        }
-//    }
 
 }

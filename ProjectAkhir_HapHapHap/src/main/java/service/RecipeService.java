@@ -148,11 +148,11 @@ public class RecipeService {
     }
 
     public List<Resep> getPendingResep() {
-        return resepDao.getPendingResep();
+        return resepDao.getPendingResep(); // ambil data resep status pending
     }
 
     public boolean updateResepStatus(int idResep, String status) {
-        return resepDao.updateResepStatus(idResep, status);
+        return resepDao.updateResepStatus(idResep, status); // update status resep
     }
 
     public void perbaruiResep(int idResep, String judul, String kategori, int tingkatKepedasan,
